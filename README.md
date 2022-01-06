@@ -1,4 +1,4 @@
-# MEMENTO - Svelte, Typescript & TailwindCSS
+# How To Get Medium Stats With JavaScript and Svelte
 
 Template to create a static site with Svelte, Typescript and TailwindCSS
 

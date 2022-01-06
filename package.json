@@ -1,7 +1,7 @@
 {
-  "name": "memento-svelte-typescript-tailwind",
-  "version": "0.0.3",
-  "description": "Template to create a static site with Svelte, Typescript and TailwindCSS",
+  "name": "medium-stats",
+  "version": "0.0.1",
+  "description": "How To Get Medium Stats With JavaScript and Svelte",
   "scripts": {
     "clean": "node clean-build.js",
     "build": "npm run clean && rollup -c",
