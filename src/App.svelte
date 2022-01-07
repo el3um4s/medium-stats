@@ -1,6 +1,7 @@
 <script lang="ts">
   import "./css/tailwind.pcss";
   // import Table from "./components/Table.svelte";
+  import Istogram from "./components/Istogram.svelte";
 
   // const urlMedium: string = "https://medium.com/me/stats?format=json&count=100"; // stats.json
   const urlMedium: string =
@@ -8,6 +9,10 @@
 
   let listStories = [];
   let monthlyAmounts = [];
+  let chartData = [];
+  let chartLabels = [];
+
+  $: showMonthlyAmounts = monthlyAmounts.length > 0;
 
   async function loadDashboardJSON() {
     let [fileHandle] = await window.showOpenFilePicker();
@@ -75,6 +80,15 @@
   //   { key: "amountTot", title: "$ (Tot)", type: "cents" },
   //   { key: "wordCount", title: "Word", type: "numeric" },
   // ];
+
+  function getDataForChart(monthly) {
+    const data = monthly.map((m) => m.amount).reverse();
+    const labels = monthly.map((m) => m.month.monthName).reverse();
+    return { data, labels };
+  }
+
+  $: chartData = [...getDataForChart(monthlyAmounts).data];
+  $: chartLabels = [...getDataForChart(monthlyAmounts).labels];
 </script>
 
 <main>
@@ -95,14 +109,36 @@
   >
 
   {#if monthlyAmounts.length > 0}
-    <ul>
-      {#each monthlyAmounts as data (data.month)}
-        <li>
-          {data.month.monthName}
-          {data.month.year} - {data.amount / 100} $
-        </li>
-      {/each}
-    </ul>
+    <div>
+      <button
+        on:click={() => {
+          showMonthlyAmounts = !showMonthlyAmounts;
+        }}
+        >{#if !showMonthlyAmounts}
+          Show Monthly Amounts
+        {:else}
+          Hide Monthly Amounts
+        {/if}</button
+      >
+    </div>
+  {/if}
+
+  {#if monthlyAmounts.length > 0 && showMonthlyAmounts}
+    <div class="monthly-amounts">
+      <div class="monthly-list">
+        <ul>
+          {#each monthlyAmounts as data (data.month)}
+            <li>
+              {data.month.monthName}
+              {data.month.year} - {data.amount / 100} $
+            </li>
+          {/each}
+        </ul>
+      </div>
+      <div class="istogram">
+        <Istogram labels={chartLabels} data={chartData} />
+      </div>
+    </div>
   {/if}
 
   <!-- {#if listStories.length > 0}
@@ -111,4 +147,20 @@
 </main>
 
 <style lang="postcss">
+  .monthly-amounts {
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: auto 1fr;
+  }
+
+  .monthly-list {
+    width: 20ch;
+    height: 300px;
+    overflow-y: auto;
+  }
+
+  .istogram {
+    width: 100%;
+    height: 100%;
+  }
 </style>
