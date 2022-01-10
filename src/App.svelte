@@ -1,7 +1,16 @@
 <script lang="ts">
   import "./css/tailwind.pcss";
-  // import Table from "./components/Table.svelte";
-  import Istogram from "./components/Istogram.svelte";
+
+  import type { MediumDashboard } from "./functions/mediumDashboard";
+  import { loadMediumJSONStats } from "./functions/utilityJSON";
+  import {
+    getMonthlyAmounts,
+    getDataForMonthlyAmountsChart,
+  } from "./functions/monthlyAmountsStats";
+  import { getListStoryAmountStats } from "./functions/storyAmountStats";
+
+  import Table from "./components/Table.svelte";
+  import Histogram from "./components/Histogram.svelte";
 
   // const urlMedium: string = "https://medium.com/me/stats?format=json&count=100"; // stats.json
   const urlMedium: string =
@@ -14,85 +23,44 @@
 
   $: showMonthlyAmounts = monthlyAmounts.length > 0;
 
+  $: chartData = [...getDataForMonthlyAmountsChart(monthlyAmounts).data];
+  $: chartLabels = [...getDataForMonthlyAmountsChart(monthlyAmounts).labels];
+
+  const headersTable = [
+    { key: "firstPublishedAt", title: "Date", type: "date", width: "12ch" },
+    {
+      key: "amountTot",
+      title: "$ Tot",
+      type: "cents",
+      width: "10ch",
+      align: "end",
+    },
+    {
+      key: "amountMonth",
+      title: "$ Month",
+      type: "cents",
+      width: "10ch",
+      align: "end",
+    },
+    { key: "title", title: "Title", type: "text" },
+    {
+      key: "wordCount",
+      title: "Words",
+      type: "numeric",
+      width: "6ch",
+      align: "end",
+    },
+  ];
+
   async function loadDashboardJSON() {
-    let [fileHandle] = await window.showOpenFilePicker();
-    const file = await fileHandle.getFile();
-    const contents = await file.text();
-    const stats = JSON.parse(sanitizeOriginalStats(contents));
-    return stats;
+    const stats: MediumDashboard = await loadMediumJSONStats();
+    monthlyAmounts = [...getMonthlyAmounts(stats)];
+    listStories = [...getListStoryAmountStats(stats.payload.postAmounts)];
   }
-
-  function sanitizeOriginalStats(contents) {
-    const result = contents.startsWith(`])}while(1);</x>`)
-      ? contents.replace(`])}while(1);</x>`, "")
-      : contents;
-    return result;
-  }
-
-  function getMonthlyAmounts(stats) {
-    const currentMonth = getMonthStats(stats.payload.currentMonthAmount, true);
-    const previousMonths = stats.payload.completedMonthlyAmounts.map(
-      (month) => {
-        return getMonthStats(month);
-      }
-    );
-
-    return [currentMonth, ...previousMonths];
-  }
-
-  function getMonthStats(month, isCurrentMonth = false) {
-    return {
-      isCurrentMonth,
-      month: getDate(month.periodStartedAt),
-      amount: parseInt(month.amount),
-    };
-  }
-
-  function getDate(periodStartedAt) {
-    const date = new Date(parseInt(periodStartedAt));
-    return {
-      year: date.getFullYear(),
-      month: date.getMonth(),
-      monthName: date.toLocaleString("default", { month: "short" }),
-    };
-  }
-
-  function getListStories(postAmounts) {
-    const result = postAmounts.map((p) => {
-      return {
-        id: p.post.id,
-        title: p.post.title,
-        amountMonth: p.amount,
-        amountTot: p.totalAmountPaidToDate,
-        homeCollectionId: p.post.homeCollectionId,
-        wordCount: p.post.virtuals.wordCount,
-        readingTime: p.post.virtuals.readingTime,
-        firstPublishedAt: p.post.firstPublishedAt,
-      };
-    });
-    return result;
-  }
-
-  // const headersTable = [
-  //   { key: "firstPublishedAt", title: "Date", type: "date" },
-  //   { key: "title", title: "Title", type: "text" },
-  //   { key: "amountMonth", title: "$ (Month)", type: "cents" },
-  //   { key: "amountTot", title: "$ (Tot)", type: "cents" },
-  //   { key: "wordCount", title: "Word", type: "numeric" },
-  // ];
-
-  function getDataForChart(monthly) {
-    const data = monthly.map((m) => m.amount).reverse();
-    const labels = monthly.map((m) => m.month.monthName).reverse();
-    return { data, labels };
-  }
-
-  $: chartData = [...getDataForChart(monthlyAmounts).data];
-  $: chartLabels = [...getDataForChart(monthlyAmounts).labels];
 </script>
 
 <main>
-  <p>Version: 0.0.1</p>
+  <p>Version: 0.0.2</p>
 
   <button
     on:click={() => {
@@ -102,9 +70,7 @@
 
   <button
     on:click={async () => {
-      const stats = await loadDashboardJSON();
-      monthlyAmounts = [...getMonthlyAmounts(stats)];
-      // listStories = [...getListStories(stats.payload.postAmounts)];
+      await loadDashboardJSON();
     }}>Load dashboard.json</button
   >
 
@@ -136,14 +102,16 @@
         </ul>
       </div>
       <div class="istogram">
-        <Istogram labels={chartLabels} data={chartData} />
+        <Histogram labels={chartLabels} data={chartData} />
       </div>
     </div>
   {/if}
 
-  <!-- {#if listStories.length > 0}
-    <Table rows={listStories} headers={headersTable} />
-  {/if} -->
+  {#if listStories.length > 0}
+    <div class="list-stories">
+      <Table rows={listStories} headers={headersTable} />
+    </div>
+  {/if}
 </main>
 
 <style lang="postcss">
@@ -162,5 +130,10 @@
   .istogram {
     width: 100%;
     height: 100%;
+  }
+
+  .list-stories {
+    width: 100%;
+    height: 400px;
   }
 </style>
