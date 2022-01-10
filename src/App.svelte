@@ -9,6 +9,11 @@
   } from "./functions/monthlyAmountsStats";
   import { getListStoryAmountStats } from "./functions/storyAmountStats";
 
+  import {
+    headersTable,
+    calculateTotalsTable,
+  } from "./functions/tableStoryAmountStats";
+
   import Table from "./components/Table.svelte";
   import Histogram from "./components/Histogram.svelte";
 
@@ -26,31 +31,7 @@
   $: chartData = [...getDataForMonthlyAmountsChart(monthlyAmounts).data];
   $: chartLabels = [...getDataForMonthlyAmountsChart(monthlyAmounts).labels];
 
-  const headersTable = [
-    { key: "firstPublishedAt", title: "Date", type: "date", width: "12ch" },
-    {
-      key: "amountTot",
-      title: "$ Tot",
-      type: "cents",
-      width: "10ch",
-      align: "end",
-    },
-    {
-      key: "amountMonth",
-      title: "$ Month",
-      type: "cents",
-      width: "10ch",
-      align: "end",
-    },
-    { key: "title", title: "Title", type: "text" },
-    {
-      key: "wordCount",
-      title: "Words",
-      type: "numeric",
-      width: "6ch",
-      align: "end",
-    },
-  ];
+  $: totalsTable = [...calculateTotalsTable(listStories, headersTable)];
 
   async function loadDashboardJSON() {
     const stats: MediumDashboard = await loadMediumJSONStats();
@@ -109,7 +90,7 @@
 
   {#if listStories.length > 0}
     <div class="list-stories">
-      <Table rows={listStories} headers={headersTable} />
+      <Table rows={listStories} headers={headersTable} totals={totalsTable} />
     </div>
   {/if}
 </main>

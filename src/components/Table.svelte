@@ -1,9 +1,10 @@
 <script lang="ts">
-  import type { Table_Labels } from "./Table";
+  import type { Table_Labels, Table_Totals } from "./Table";
   import type { CustomDateTime } from "../functions/dates";
 
   export let rows = [];
   export let headers: Table_Labels[] = [];
+  export let totals: Table_Totals[] = [];
 
   const getWidthColumns = (header: Table_Labels[]) => {
     const widths = header.map((h) => (h?.width ? h.width : "auto"));
@@ -49,6 +50,16 @@
       {/each}
     {/each}
   </section>
+
+  {#if totals.length > 0}
+    <footer style={gridTemplate}>
+      {#each totals as total}
+        <div class="cell total" style={getAlignItem(total)}>
+          {convert(total.type, total.value)}
+        </div>
+      {/each}
+    </footer>
+  {/if}
 </article>
 
 <style lang="postcss">
@@ -61,10 +72,17 @@
   }
 
   header,
-  section {
+  section,
+  footer {
     display: grid;
   }
   header {
+    border-bottom: 1px solid var(--text-color, theme("colors.gray.800"));
+    width: calc(100% - 1rem);
+  }
+
+  footer {
+    border-top: 1px solid var(--text-color, theme("colors.gray.800"));
     border-bottom: 1px solid var(--text-color, theme("colors.gray.800"));
     width: calc(100% - 1rem);
   }

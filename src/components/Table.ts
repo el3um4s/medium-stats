@@ -5,3 +5,12 @@ export interface Table_Labels {
   width?: string;
   align?: string;
 }
+
+export interface Table_Totals {
+  key: string;
+  title: string;
+  type: string;
+  width?: string;
+  align?: string;
+  value: number | string;
+}

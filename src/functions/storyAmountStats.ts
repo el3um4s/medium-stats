@@ -34,20 +34,3 @@ export const getListStoryAmountStats = (
 ): StoryAmountStats[] => {
   return list.map((story) => getStoryAmountStats(story));
 };
-
-// function getListStories(postAmounts) {
-//   const result = postAmounts.map((p) => {
-//     // const firstPublishedAt = getDate(p.post.firstPublishedAt);
-//     return {
-//       id: p.post.id,
-//       title: p.post.title,
-//       amountMonth: p.amount,
-//       amountTot: p.totalAmountPaidToDate,
-//       homeCollectionId: p.post.homeCollectionId,
-//       wordCount: p.post.virtuals.wordCount,
-//       readingTime: p.post.virtuals.readingTime,
-//       firstPublishedAt: getDate(p.post.firstPublishedAt),
-//     };
-//   });
-//   return result;
-// }
