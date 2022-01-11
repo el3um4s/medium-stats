@@ -1,4 +1,4 @@
-import type { Table_Labels, Table_Totals } from "../components/Table";
+import type { Table_Labels, Table_Totals } from "../components/tables/Table";
 import type { StoryAmountStats } from "./storyAmountStats";
 
 export const headersTable: Table_Labels[] = [

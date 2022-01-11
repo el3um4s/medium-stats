@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Table_Labels, Table_Totals } from "./Table";
-  import type { CustomDateTime } from "../functions/dates";
+  import type { CustomDateTime } from "../../functions/dates";
 
   export let rows = [];
   export let headers: Table_Labels[] = [];
@@ -30,12 +30,33 @@
     }
     return v;
   };
+
+  import TableContextMenu from "../contextMenu/TableContextMenu.svelte";
+  import { tick } from "svelte";
+  let showContextMenu = false;
+  let posContextMenu = { x: 0, y: 0 };
+  async function onRightClick(header, event) {
+    if (showContextMenu) {
+      showContextMenu = false;
+      await new Promise((res) => setTimeout(res, 10));
+    }
+    posContextMenu = { x: event.pageX, y: event.pageY };
+    showContextMenu = true;
+  }
 </script>
+
+<TableContextMenu show={showContextMenu} {...posContextMenu} />
 
 <article class="table">
   <header style={gridTemplate}>
     {#each headers as header}
-      <div class="cell title" style={getAlignItem(header)}>
+      <div
+        class="cell title"
+        style={getAlignItem(header)}
+        on:contextmenu|preventDefault={(event) => {
+          onRightClick(header, event);
+        }}
+      >
         {header.title}
       </div>
     {/each}
@@ -44,7 +65,13 @@
   <section style={gridTemplate}>
     {#each rows as row}
       {#each headers as header}
-        <div class="cell" style={getAlignItem(header)}>
+        <div
+          class="cell"
+          style={getAlignItem(header)}
+          on:contextmenu|preventDefault={(event) => {
+            onRightClick(header, event);
+          }}
+        >
           {convert(header.type, row[header.key])}
         </div>
       {/each}

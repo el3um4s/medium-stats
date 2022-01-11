@@ -14,7 +14,7 @@
     calculateTotalsTable,
   } from "./functions/tableStoryAmountStats";
 
-  import Table from "./components/Table.svelte";
+  import Table from "./components/tables/Table.svelte";
   import Histogram from "./components/Histogram.svelte";
 
   // const urlMedium: string = "https://medium.com/me/stats?format=json&count=100"; // stats.json
@@ -41,7 +41,7 @@
 </script>
 
 <main>
-  <p>Version: 0.0.2</p>
+  <p>Version: 0.0.3</p>
 
   <button
     on:click={() => {
