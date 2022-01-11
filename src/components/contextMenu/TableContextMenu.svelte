@@ -11,6 +11,7 @@
 
   const hide = () => {
     show = false;
+    dispatch("hide");
   };
 </script>
 

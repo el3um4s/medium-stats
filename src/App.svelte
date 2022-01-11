@@ -96,6 +96,8 @@
         headers={headersTable}
         totals={totalsTable}
         orders={ordersTable}
+        chartColumn="title"
+        chartValue="wordCount"
       />
     </div>
   {/if}

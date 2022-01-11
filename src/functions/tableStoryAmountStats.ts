@@ -34,48 +34,48 @@ export const headersTable: Table_Labels[] = [
 export const ordersTable: Table_Orders[] = [
   {
     key: "firstPublishedAt",
-    functionOrderASC: (v) => {
-      console.log(v);
-    },
-    functionOrderDESC: (v) => {
-      console.log(v);
-    },
+    functionOrderASC: (key: string, list: StoryAmountStats[]) => [
+      ...orderDatesASC(key, list),
+    ],
+    functionOrderDESC: (key: string, list: StoryAmountStats[]) => [
+      ...orderDatesDESC(key, list),
+    ],
   },
   {
     key: "amountTot",
-    functionOrderASC: (key: string, list: StoryAmountStats[]) => {
-      return [...orderNumbersASC(key, list)];
-    },
-    functionOrderDESC: (key: string, list: StoryAmountStats[]) => {
-      return [...orderNumbersDESC(key, list)];
-    },
+    functionOrderASC: (key: string, list: StoryAmountStats[]) => [
+      ...orderNumbersASC(key, list),
+    ],
+    functionOrderDESC: (key: string, list: StoryAmountStats[]) => [
+      ...orderNumbersDESC(key, list),
+    ],
   },
   {
     key: "amountMonth",
-    functionOrderASC: (key: string, list: StoryAmountStats[]) => {
-      return [...orderNumbersASC(key, list)];
-    },
-    functionOrderDESC: (key: string, list: StoryAmountStats[]) => {
-      return [...orderNumbersDESC(key, list)];
-    },
+    functionOrderASC: (key: string, list: StoryAmountStats[]) => [
+      ...orderNumbersASC(key, list),
+    ],
+    functionOrderDESC: (key: string, list: StoryAmountStats[]) => [
+      ...orderNumbersDESC(key, list),
+    ],
   },
   {
     key: "title",
-    functionOrderASC: (key: string, list: StoryAmountStats[]) => {
-      return [...orderStringsASC(key, list)];
-    },
-    functionOrderDESC: (key: string, list: StoryAmountStats[]) => {
-      return [...orderStringsDESC(key, list)];
-    },
+    functionOrderASC: (key: string, list: StoryAmountStats[]) => [
+      ...orderStringsASC(key, list),
+    ],
+    functionOrderDESC: (key: string, list: StoryAmountStats[]) => [
+      ...orderStringsDESC(key, list),
+    ],
   },
   {
     key: "wordCount",
-    functionOrderASC: (key: string, list: StoryAmountStats[]) => {
-      return [...orderNumbersASC(key, list)];
-    },
-    functionOrderDESC: (key: string, list: StoryAmountStats[]) => {
-      return [...orderNumbersDESC(key, list)];
-    },
+    functionOrderASC: (key: string, list: StoryAmountStats[]) => [
+      ...orderNumbersASC(key, list),
+    ],
+    functionOrderDESC: (key: string, list: StoryAmountStats[]) => [
+      ...orderNumbersDESC(key, list),
+    ],
   },
 ];
 
@@ -142,6 +142,28 @@ function orderNumbersDESC(
   return list.sort((a, b) => {
     const x = a[key];
     const y = b[key];
+    return x > y ? -1 : x < y ? 1 : 0;
+  });
+}
+
+function orderDatesASC(
+  key: string,
+  list: StoryAmountStats[]
+): StoryAmountStats[] {
+  return list.sort((a, b) => {
+    const x = a[key].timestamp;
+    const y = b[key].timestamp;
+    return x > y ? 1 : x < y ? -1 : 0;
+  });
+}
+
+function orderDatesDESC(
+  key: string,
+  list: StoryAmountStats[]
+): StoryAmountStats[] {
+  return list.sort((a, b) => {
+    const x = a[key].timestamp;
+    const y = b[key].timestamp;
     return x > y ? -1 : x < y ? 1 : 0;
   });
 }

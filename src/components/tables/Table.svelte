@@ -17,7 +17,7 @@
 
   $: gridTemplate = `grid-template-columns: ${getWidthColumns(headers)};`;
 
-  const convertToDollars = (cents: number) => cents / 100;
+  const convertToDollars = (cents: number) => (cents / 100).toFixed(2);
   const convertToDate = (date: CustomDateTime) =>
     `${date.year} ${date.monthName} ${date.day}`;
 
@@ -69,6 +69,31 @@
     const index = orders.findIndex((o) => o.key === key);
     return orders[index];
   }
+
+  $: cellData = !showContextMenu ? null : cellData;
+
+  export let chartColumn: string = "";
+  export let chartValue: string = "";
+
+  $: chartListValues = [
+    ...rows.map((row) => {
+      return row[chartValue];
+    }),
+  ];
+  $: chartMaxValue = Math.max(...chartListValues);
+
+  function getWidthChar(value) {
+    return (value / chartMaxValue) * 100;
+  }
+
+  function chartStyle(condition, value) {
+    if (!condition) {
+      return "";
+    }
+    const left = Math.round((value / chartMaxValue) * 100);
+    const result = `background:linear-gradient(to right,#fdba74 ${left}%, transparent ${left}%)`;
+    return result;
+  }
 </script>
 
 <TableContextMenu
@@ -76,13 +101,17 @@
   {...posContextMenu}
   on:order-asc={orderAsc}
   on:order-desc={orderDesc}
+  on:hide={() => {
+    showContextMenu = false;
+  }}
 />
 
 <article class="table">
   <header style={gridTemplate}>
-    {#each headers as header}
+    {#each headers as header (header.key)}
       <div
         class="cell title"
+        class:column-order={cellData?.key === header.key}
         style={getAlignItem(header)}
         on:contextmenu|preventDefault={(event) => {
           onRightClick(header, event);
@@ -93,26 +122,41 @@
     {/each}
   </header>
 
-  <section style={gridTemplate}>
-    {#each rows as row}
-      {#each headers as header}
-        <div
-          class="cell"
-          style={getAlignItem(header)}
-          on:contextmenu|preventDefault={(event) => {
-            onRightClick(header, event);
-          }}
-        >
-          {convert(header.type, row[header.key])}
-        </div>
-      {/each}
+  <section>
+    {#each rows as row (row.id)}
+      <div class="row" style={gridTemplate}>
+        {#each headers as header (header.key)}
+          <div
+            class="cell"
+            style={getAlignItem(header)}
+            class:column-order={cellData?.key === header.key}
+            on:contextmenu|preventDefault={(event) => {
+              onRightClick(header, event);
+            }}
+          >
+            <div
+              class="chart-bar"
+              style={chartStyle(chartColumn === header.key, row[chartValue])}
+            >
+              {convert(header.type, row[header.key])}
+            </div>
+          </div>
+        {/each}
+      </div>
     {/each}
   </section>
 
   {#if totals.length > 0}
     <footer style={gridTemplate}>
       {#each totals as total}
-        <div class="cell total" style={getAlignItem(total)}>
+        <div
+          class="cell total"
+          class:column-order={cellData?.key === total.key}
+          style={getAlignItem(total)}
+          on:contextmenu|preventDefault={(event) => {
+            onRightClick(total, event);
+          }}
+        >
           {convert(total.type, total.value)}
         </div>
       {/each}
@@ -130,23 +174,33 @@
   }
 
   header,
-  section,
   footer {
     display: grid;
   }
   header {
-    border-bottom: 1px solid var(--text-color, theme("colors.gray.800"));
+    border-bottom: 2px solid var(--text-color, theme("colors.gray.800"));
     width: calc(100% - 1rem);
   }
 
   footer {
-    border-top: 1px solid var(--text-color, theme("colors.gray.800"));
+    border-top: 2px solid var(--text-color, theme("colors.gray.800"));
     border-bottom: 1px solid var(--text-color, theme("colors.gray.800"));
     width: calc(100% - 1rem);
   }
 
   section {
+    display: flex;
+    flex-direction: column;
     overflow-y: auto;
+  }
+
+  .row {
+    display: grid;
+    border-bottom: 1px dotted var(--text-color, theme("colors.gray.500"));
+  }
+
+  .row:hover {
+    background-color: theme("colors.orange.100");
   }
 
   ::-webkit-scrollbar {
@@ -164,12 +218,17 @@
   }
   .cell {
     @apply pt-2 pb-2 pr-1 pl-1;
+    border: 2px solid transparent;
+    box-sizing: content-box;
+  }
+
+  .column-order {
+    border-left: 2px dotted theme("colors.orange.300");
+    border-right: 2px dotted theme("colors.orange.300");
+    background-color: theme("colors.orange.100");
   }
 
   .title {
     @apply font-bold;
   }
-  /* .table > div.table-header {
-    @apply font-bold;
-  } */
 </style>
