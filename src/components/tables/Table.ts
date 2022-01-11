@@ -14,3 +14,9 @@ export interface Table_Totals {
   align?: string;
   value: number | string;
 }
+
+export interface Table_Orders {
+  key: string;
+  functionOrderASC: Function;
+  functionOrderDESC: Function;
+}

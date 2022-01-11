@@ -12,6 +12,7 @@
   import {
     headersTable,
     calculateTotalsTable,
+    ordersTable,
   } from "./functions/tableStoryAmountStats";
 
   import Table from "./components/tables/Table.svelte";
@@ -90,7 +91,12 @@
 
   {#if listStories.length > 0}
     <div class="list-stories">
-      <Table rows={listStories} headers={headersTable} totals={totalsTable} />
+      <Table
+        rows={listStories}
+        headers={headersTable}
+        totals={totalsTable}
+        orders={ordersTable}
+      />
     </div>
   {/if}
 </main>

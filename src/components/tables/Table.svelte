@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Table_Labels, Table_Totals } from "./Table";
+  import type { Table_Labels, Table_Totals, Table_Orders } from "./Table";
   import type { CustomDateTime } from "../../functions/dates";
 
   export let rows = [];
@@ -32,20 +32,51 @@
   };
 
   import TableContextMenu from "../contextMenu/TableContextMenu.svelte";
-  import { tick } from "svelte";
   let showContextMenu = false;
   let posContextMenu = { x: 0, y: 0 };
+  let cellData;
   async function onRightClick(header, event) {
     if (showContextMenu) {
       showContextMenu = false;
       await new Promise((res) => setTimeout(res, 10));
     }
     posContextMenu = { x: event.pageX, y: event.pageY };
+    cellData = { ...header };
     showContextMenu = true;
+  }
+
+  export let orders: Table_Orders[] = [];
+
+  function orderAsc() {
+    rows = [
+      ...getFunctions(cellData.key, orders).functionOrderASC(
+        cellData.key,
+        rows
+      ),
+    ];
+  }
+
+  function orderDesc() {
+    rows = [
+      ...getFunctions(cellData.key, orders).functionOrderDESC(
+        cellData.key,
+        rows
+      ),
+    ];
+  }
+
+  function getFunctions(key: string, orders: Table_Orders[]): Table_Orders {
+    const index = orders.findIndex((o) => o.key === key);
+    return orders[index];
   }
 </script>
 
-<TableContextMenu show={showContextMenu} {...posContextMenu} />
+<TableContextMenu
+  show={showContextMenu}
+  {...posContextMenu}
+  on:order-asc={orderAsc}
+  on:order-desc={orderDesc}
+/>
 
 <article class="table">
   <header style={gridTemplate}>

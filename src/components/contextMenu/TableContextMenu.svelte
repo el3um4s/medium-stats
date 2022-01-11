@@ -18,13 +18,13 @@
   <section style="top: {y}px; left: {x}px;">
     <button
       on:click={() => {
-        show = false;
+        hide();
         dispatch("order-desc");
       }}><SortDescending /></button
     >
     <button
       on:click={() => {
-        show = false;
+        hide();
         dispatch("order-asc");
       }}><SortAscending /></button
     >

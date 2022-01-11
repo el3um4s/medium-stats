@@ -1,4 +1,8 @@
-import type { Table_Labels, Table_Totals } from "../components/tables/Table";
+import type {
+  Table_Labels,
+  Table_Totals,
+  Table_Orders,
+} from "../components/tables/Table";
 import type { StoryAmountStats } from "./storyAmountStats";
 
 export const headersTable: Table_Labels[] = [
@@ -27,6 +31,54 @@ export const headersTable: Table_Labels[] = [
   },
 ];
 
+export const ordersTable: Table_Orders[] = [
+  {
+    key: "firstPublishedAt",
+    functionOrderASC: (v) => {
+      console.log(v);
+    },
+    functionOrderDESC: (v) => {
+      console.log(v);
+    },
+  },
+  {
+    key: "amountTot",
+    functionOrderASC: (key: string, list: StoryAmountStats[]) => {
+      return [...orderNumbersASC(key, list)];
+    },
+    functionOrderDESC: (key: string, list: StoryAmountStats[]) => {
+      return [...orderNumbersDESC(key, list)];
+    },
+  },
+  {
+    key: "amountMonth",
+    functionOrderASC: (key: string, list: StoryAmountStats[]) => {
+      return [...orderNumbersASC(key, list)];
+    },
+    functionOrderDESC: (key: string, list: StoryAmountStats[]) => {
+      return [...orderNumbersDESC(key, list)];
+    },
+  },
+  {
+    key: "title",
+    functionOrderASC: (key: string, list: StoryAmountStats[]) => {
+      return [...orderStringsASC(key, list)];
+    },
+    functionOrderDESC: (key: string, list: StoryAmountStats[]) => {
+      return [...orderStringsDESC(key, list)];
+    },
+  },
+  {
+    key: "wordCount",
+    functionOrderASC: (key: string, list: StoryAmountStats[]) => {
+      return [...orderNumbersASC(key, list)];
+    },
+    functionOrderDESC: (key: string, list: StoryAmountStats[]) => {
+      return [...orderNumbersDESC(key, list)];
+    },
+  },
+];
+
 export const calculateTotalsTable = (
   listStories: StoryAmountStats[],
   headersTable: Table_Labels[]
@@ -48,4 +100,48 @@ function calculateTotalKey(
   return listStories.reduce((previous, current) => {
     return previous + current[key];
   }, 0);
+}
+
+function orderStringsASC(
+  key: string,
+  list: StoryAmountStats[]
+): StoryAmountStats[] {
+  return list.sort((a, b) => {
+    const x = a[key].toUpperCase();
+    const y = b[key].toUpperCase();
+    return x > y ? 1 : x < y ? -1 : 0;
+  });
+}
+
+function orderStringsDESC(
+  key: string,
+  list: StoryAmountStats[]
+): StoryAmountStats[] {
+  return list.sort((a, b) => {
+    const x = a[key].toUpperCase();
+    const y = b[key].toUpperCase();
+    return x > y ? -1 : x < y ? 1 : 0;
+  });
+}
+
+function orderNumbersASC(
+  key: string,
+  list: StoryAmountStats[]
+): StoryAmountStats[] {
+  return list.sort((a, b) => {
+    const x = a[key];
+    const y = b[key];
+    return x > y ? 1 : x < y ? -1 : 0;
+  });
+}
+
+function orderNumbersDESC(
+  key: string,
+  list: StoryAmountStats[]
+): StoryAmountStats[] {
+  return list.sort((a, b) => {
+    const x = a[key];
+    const y = b[key];
+    return x > y ? -1 : x < y ? 1 : 0;
+  });
 }
