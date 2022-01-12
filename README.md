@@ -1,26 +1,20 @@
-# How To Get Medium Stats With JavaScript and Svelte
+# Medium Stats
 
-Template to create a static site with Svelte, Typescript and TailwindCSS
+Live: [el3um4s.github.io/medium-stats/](https://el3um4s.github.io/medium-stats/)
 
-# svelte app
+My experiments about how to get better Medium Stats.
 
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/el3um4s/memento-svelte-typescript-tailwind.
+I'm blogging about the development process in these posts:
 
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
-
-```bash
-npx degit el3um4s/memento-svelte-typescript-tailwind svelte-app
-cd svelte-app
-```
+- How to Get Medium Stats With JavaScript and Svelte: [Medium](https://javascript.plainenglish.io/how-to-get-medium-stats-with-javascript-and-svelte-part-1-a1d08b96799e) - [Strani Anelli](https://blog.stranianelli.com/medium-stats-with-javascript-and-svelte-part-1/)
 
 _Note that you will need to have [Node.js](https://nodejs.org) installed._
 
 ## Get started
 
-Install the dependencies...
+Clone the repository and then install the dependencies...
 
 ```bash
-cd svelte-app
 npm install
 ```
 
@@ -30,7 +24,7 @@ npm install
 npm run dev
 ```
 
-Navigate to [localhost:5000](http://localhost:5000). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
+Navigate to [localhost:8080](http://localhost:8080). You should see your app running.
 
 By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the `sirv` commands in package.json to include the option `--host 0.0.0.0`.
 
@@ -42,18 +36,6 @@ To create an optimised version of the app:
 
 ```bash
 npm run build
-```
-
-You can run the newly built app with `npm run start`. This uses [sirv](https://github.com/lukeed/sirv), which is included in your package.json's `dependencies` so that the app will work when you deploy to platforms like [Heroku](https://heroku.com).
-
-## Single-page app mode
-
-By default, sirv will only respond to requests that match files in `public`. This is to maximise compatibility with static fileservers, allowing you to deploy your app anywhere.
-
-If you're building a single-page app (SPA) with multiple routes, sirv needs to be able to respond to requests for _any_ path. You can make it so by editing the `"start"` command in package.json:
-
-```js
-"start": "sirv public --single"
 ```
 
 ## Deploying to the web
