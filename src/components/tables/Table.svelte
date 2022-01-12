@@ -15,7 +15,7 @@
     return header?.align ? `text-align: ${header.align};` : "";
   };
 
-  $: gridTemplate = `grid-template-columns: ${getWidthColumns(headers)};`;
+  $: gridTemplate = `grid-template-columns: 4ch ${getWidthColumns(headers)};`;
 
   const convertToDollars = (cents: number) => (cents / 100).toFixed(2);
   const convertToDate = (date: CustomDateTime) =>
@@ -82,10 +82,6 @@
   ];
   $: chartMaxValue = Math.max(...chartListValues);
 
-  function getWidthChar(value) {
-    return (value / chartMaxValue) * 100;
-  }
-
   function chartStyle(condition, value) {
     if (!condition) {
       return "";
@@ -93,6 +89,12 @@
     const left = Math.round((value / chartMaxValue) * 100);
     const result = `background:linear-gradient(to right,#fdba74 ${left}%, transparent ${left}%)`;
     return result;
+  }
+
+  export let chartsColumns: string[] = [];
+
+  function chartThis() {
+    chartValue = cellData.key;
   }
 </script>
 
@@ -104,14 +106,18 @@
   on:hide={() => {
     showContextMenu = false;
   }}
+  canChart={chartsColumns.includes(cellData?.key)}
+  on:chart-this={chartThis}
 />
 
 <article class="table">
   <header style={gridTemplate}>
+    <div class="cell title" />
     {#each headers as header (header.key)}
       <div
         class="cell title"
         class:column-order={cellData?.key === header.key}
+        class:data-charted={chartValue === header.key}
         style={getAlignItem(header)}
         on:contextmenu|preventDefault={(event) => {
           onRightClick(header, event);
@@ -123,13 +129,17 @@
   </header>
 
   <section>
-    {#each rows as row (row.id)}
+    {#each rows as row, index (row.id)}
       <div class="row" style={gridTemplate}>
+        <div class="cell">
+          {index + 1}
+        </div>
         {#each headers as header (header.key)}
           <div
             class="cell"
             style={getAlignItem(header)}
             class:column-order={cellData?.key === header.key}
+            class:data-charted={chartValue === header.key}
             on:contextmenu|preventDefault={(event) => {
               onRightClick(header, event);
             }}
@@ -148,10 +158,12 @@
 
   {#if totals.length > 0}
     <footer style={gridTemplate}>
+      <div class="cell total" />
       {#each totals as total}
         <div
           class="cell total"
           class:column-order={cellData?.key === total.key}
+          class:data-charted={chartValue === total.key}
           style={getAlignItem(total)}
           on:contextmenu|preventDefault={(event) => {
             onRightClick(total, event);
@@ -228,6 +240,9 @@
     background-color: theme("colors.orange.100");
   }
 
+  .data-charted {
+    font-weight: 700;
+  }
   .title {
     @apply font-bold;
   }

@@ -13,6 +13,7 @@
     headersTable,
     calculateTotalsTable,
     ordersTable,
+    chartsTable,
   } from "./functions/tableStoryAmountStats";
 
   import Table from "./components/tables/Table.svelte";
@@ -42,7 +43,7 @@
 </script>
 
 <main>
-  <p>Version: 0.0.3</p>
+  <p>Version: 0.0.5</p>
 
   <button
     on:click={() => {
@@ -96,8 +97,9 @@
         headers={headersTable}
         totals={totalsTable}
         orders={ordersTable}
+        chartsColumns={chartsTable}
         chartColumn="title"
-        chartValue="wordCount"
+        chartValue="amountMonth"
       />
     </div>
   {/if}

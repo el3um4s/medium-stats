@@ -1,6 +1,7 @@
 <script lang="ts">
   import SortAscending from "./SortAscending.svelte";
   import SortDescending from "./SortDescending.svelte";
+  import ChartBar from "./ChartBar.svelte";
 
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
@@ -8,6 +9,8 @@
   export let x: number = 0;
   export let y: number = 0;
   export let show: boolean = false;
+
+  export let canChart: boolean = false;
 
   const hide = () => {
     show = false;
@@ -29,6 +32,14 @@
         dispatch("order-asc");
       }}><SortAscending /></button
     >
+    {#if canChart}
+      <button
+        on:click={() => {
+          hide();
+          dispatch("chart-this");
+        }}><ChartBar /></button
+      >
+    {/if}
   </section>
 {/if}
 

@@ -79,6 +79,8 @@ export const ordersTable: Table_Orders[] = [
   },
 ];
 
+export const chartsTable: string[] = ["amountTot", "amountMonth", "wordCount"];
+
 export const calculateTotalsTable = (
   listStories: StoryAmountStats[],
   headersTable: Table_Labels[]
