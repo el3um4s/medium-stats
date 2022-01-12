@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { fade } from "svelte/transition";
+
   import SortAscending from "./SortAscending.svelte";
   import SortDescending from "./SortDescending.svelte";
   import ChartBar from "./ChartBar.svelte";
@@ -19,7 +21,7 @@
 </script>
 
 {#if show}
-  <section style="top: {y}px; left: {x}px;">
+  <section style="top: {y}px; left: {x}px;" transition:fade>
     <button
       on:click={() => {
         hide();

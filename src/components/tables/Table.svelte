@@ -96,21 +96,23 @@
   function chartThis() {
     chartValue = cellData.key;
   }
+
+  import { flip } from "svelte/animate";
+  import { sineOut } from "svelte/easing";
 </script>
 
-<TableContextMenu
-  show={showContextMenu}
-  {...posContextMenu}
-  on:order-asc={orderAsc}
-  on:order-desc={orderDesc}
-  on:hide={() => {
-    showContextMenu = false;
-  }}
-  canChart={chartsColumns.includes(cellData?.key)}
-  on:chart-this={chartThis}
-/>
-
 <article class="table">
+  <TableContextMenu
+    show={showContextMenu}
+    {...posContextMenu}
+    on:order-asc={orderAsc}
+    on:order-desc={orderDesc}
+    on:hide={() => {
+      showContextMenu = false;
+    }}
+    canChart={chartsColumns.includes(cellData?.key)}
+    on:chart-this={chartThis}
+  />
   <header style={gridTemplate}>
     <div class="cell title" />
     {#each headers as header (header.key)}
@@ -130,7 +132,11 @@
 
   <section>
     {#each rows as row, index (row.id)}
-      <div class="row" style={gridTemplate}>
+      <div
+        class="row"
+        style={gridTemplate}
+        animate:flip={{ duration: 1000, easing: sineOut }}
+      >
         <div class="cell">
           {index + 1}
         </div>
