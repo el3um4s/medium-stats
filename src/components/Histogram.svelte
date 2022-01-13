@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { slide } from "svelte/transition";
   export let data = [];
   export let labels = [];
 
@@ -10,7 +11,11 @@
 <section>
   <div class="columns data" style={positionColumns}>
     {#each data as d (Math.random())}
-      <div class="column" style="height:{(d / maxData) * 100}%;">
+      <div
+        class="column"
+        style="height:{(d / maxData) * 100}%;"
+        transition:slide
+      >
         <span class="value">{d / 100}</span>
       </div>
     {/each}

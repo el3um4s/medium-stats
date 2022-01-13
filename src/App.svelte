@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { slide } from "svelte/transition";
+
   import "./css/tailwind.pcss";
 
   import type { MediumDashboard } from "./functions/mediumDashboard";
@@ -18,6 +20,7 @@
 
   import Table from "./components/tables/Table.svelte";
   import Histogram from "./components/Histogram.svelte";
+  import Synthesis from "./components/synthesis/Synthesis.svelte";
 
   // const urlMedium: string = "https://medium.com/me/stats?format=json&count=100"; // stats.json
   const urlMedium: string =
@@ -29,6 +32,7 @@
   let chartLabels = [];
 
   $: showMonthlyAmounts = monthlyAmounts.length > 0;
+  $: showListStories = listStories.length > 0;
 
   $: chartData = [...getDataForMonthlyAmountsChart(monthlyAmounts).data];
   $: chartLabels = [...getDataForMonthlyAmountsChart(monthlyAmounts).labels];
@@ -40,10 +44,23 @@
     monthlyAmounts = [...getMonthlyAmounts(stats)];
     listStories = [...getListStoryAmountStats(stats.payload.postAmounts)];
   }
+
+  const monthSynthesis = {
+    monthName: "Gen",
+    month: 0,
+    year: 2022,
+    monthlyIncomeTotal: 0,
+    monthlyIncomeNewArticle: 0,
+    monthlyIncomeOldArticle: 0,
+    numberArticleTotal: 0,
+    numberArticleNewArticle: 0,
+    numberArticleOldArticle: 0,
+    monthsTopStory: 0,
+  };
 </script>
 
 <main>
-  <p>Version: 0.0.5</p>
+  <p>Version: 0.0.6</p>
 
   <button
     on:click={() => {
@@ -57,8 +74,8 @@
     }}>Load dashboard.json</button
   >
 
-  {#if monthlyAmounts.length > 0}
-    <div>
+  <div>
+    {#if monthlyAmounts.length > 0}
       <button
         on:click={() => {
           showMonthlyAmounts = !showMonthlyAmounts;
@@ -69,11 +86,24 @@
           Hide Monthly Amounts
         {/if}</button
       >
-    </div>
-  {/if}
+    {/if}
+
+    {#if listStories.length > 0}
+      <button
+        on:click={() => {
+          showListStories = !showListStories;
+        }}
+        >{#if !showListStories}
+          Show List Stories
+        {:else}
+          Hide List Stories
+        {/if}</button
+      >
+    {/if}
+  </div>
 
   {#if monthlyAmounts.length > 0 && showMonthlyAmounts}
-    <div class="monthly-amounts">
+    <div class="monthly-amounts" transition:slide>
       <div class="monthly-list">
         <ul>
           {#each monthlyAmounts as data (data.month)}
@@ -84,14 +114,14 @@
           {/each}
         </ul>
       </div>
-      <div class="istogram">
+      <div class="histogram">
         <Histogram labels={chartLabels} data={chartData} />
       </div>
     </div>
   {/if}
 
-  {#if listStories.length > 0}
-    <div class="list-stories">
+  {#if listStories.length > 0 && showListStories}
+    <div class="list-stories" transition:slide>
       <Table
         rows={listStories}
         headers={headersTable}
@@ -103,6 +133,10 @@
       />
     </div>
   {/if}
+
+  <div class="synthesis">
+    <Synthesis {monthSynthesis} />
+  </div>
 </main>
 
 <style lang="postcss">
@@ -118,7 +152,7 @@
     overflow-y: auto;
   }
 
-  .istogram {
+  .histogram {
     width: 100%;
     height: 100%;
   }
