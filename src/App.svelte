@@ -51,7 +51,7 @@
 </script>
 
 <main>
-  <p>Version: 0.0.8</p>
+  <p>Version: 0.0.9</p>
 
   <button
     on:click={() => {
@@ -157,14 +157,16 @@
     height: 300px;
     overflow-y: auto;
   }
-
   .histogram {
     width: 100%;
     height: 100%;
   }
-
   .list-stories {
     width: 100%;
     height: 400px;
+  }
+
+  .synthesis {
+    width: 40ch;
   }
 </style>
