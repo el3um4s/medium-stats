@@ -21,7 +21,12 @@
 </script>
 
 {#if show}
-  <section style="top: {y}px; left: {x}px;" transition:fade>
+  <section
+    style:visible={show}
+    style:left="{x}px"
+    style:top="{y}px"
+    transition:fade
+  >
     <button
       on:click={() => {
         hide();

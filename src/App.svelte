@@ -60,7 +60,7 @@
 </script>
 
 <main>
-  <p>Version: 0.0.6</p>
+  <p>Version: 0.0.7</p>
 
   <button
     on:click={() => {

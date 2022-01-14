@@ -5,11 +5,11 @@
 
   $: columns = data.length;
   $: maxData = Math.max(...data);
-  $: positionColumns = `grid-template-columns: repeat(${columns}, minmax(0, 1fr));`;
+  $: gridTemplateColumns = `repeat(${columns}, minmax(0, 1fr))`;
 </script>
 
 <section>
-  <div class="columns data" style={positionColumns}>
+  <div class="columns data" style:grid-template-columns={gridTemplateColumns}>
     {#each data as d (Math.random())}
       <div
         class="column"
@@ -20,7 +20,7 @@
       </div>
     {/each}
   </div>
-  <div class="columns labels" style={positionColumns}>
+  <div class="columns labels" style:grid-template-columns={gridTemplateColumns}>
     {#each labels as l (Math.random())}
       <div>{l}</div>
     {/each}
