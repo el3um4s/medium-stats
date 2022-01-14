@@ -10,6 +10,7 @@
     getDataForMonthlyAmountsChart,
   } from "./functions/monthlyAmountsStats";
   import { getListStoryAmountStats } from "./functions/storyAmountStats";
+  import { monthSynthesis } from "./functions/monthlySymthesis";
 
   import {
     headersTable,
@@ -33,6 +34,7 @@
 
   $: showMonthlyAmounts = monthlyAmounts.length > 0;
   $: showListStories = listStories.length > 0;
+  $: showMonthSynthesis = listStories.length > 0;
 
   $: chartData = [...getDataForMonthlyAmountsChart(monthlyAmounts).data];
   $: chartLabels = [...getDataForMonthlyAmountsChart(monthlyAmounts).labels];
@@ -45,22 +47,11 @@
     listStories = [...getListStoryAmountStats(stats.payload.postAmounts)];
   }
 
-  const monthSynthesis = {
-    monthName: "Gen",
-    month: 0,
-    year: 2022,
-    monthlyIncomeTotal: 0,
-    monthlyIncomeNewArticle: 0,
-    monthlyIncomeOldArticle: 0,
-    numberArticleTotal: 0,
-    numberArticleNewArticle: 0,
-    numberArticleOldArticle: 0,
-    monthsTopStory: 0,
-  };
+  $: currentMonthSynthesis = monthSynthesis(listStories);
 </script>
 
 <main>
-  <p>Version: 0.0.7</p>
+  <p>Version: 0.0.8</p>
 
   <button
     on:click={() => {
@@ -100,6 +91,19 @@
         {/if}</button
       >
     {/if}
+
+    {#if listStories.length > 0}
+      <button
+        on:click={() => {
+          showMonthSynthesis = !showMonthSynthesis;
+        }}
+        >{#if !showMonthSynthesis}
+          Show Month Synthesis
+        {:else}
+          Hide Month Synthesis
+        {/if}</button
+      >
+    {/if}
   </div>
 
   {#if monthlyAmounts.length > 0 && showMonthlyAmounts}
@@ -134,9 +138,11 @@
     </div>
   {/if}
 
-  <div class="synthesis">
-    <Synthesis {monthSynthesis} />
-  </div>
+  {#if listStories.length > 0 && showMonthSynthesis}
+    <div class="synthesis" transition:slide>
+      <Synthesis monthSynthesis={currentMonthSynthesis} />
+    </div>
+  {/if}
 </main>
 
 <style lang="postcss">

@@ -6,7 +6,7 @@ export interface CustomDateTime {
   day: number;
 }
 
-export const getDate = (periodStartedAt: number): CustomDateTime => {
+export const getDate = (periodStartedAt: number | Date): CustomDateTime => {
   const date = new Date(periodStartedAt);
   return {
     timestamp: date,
