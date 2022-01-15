@@ -7,6 +7,7 @@ My experiments about how to get better Medium Stats.
 I'm blogging about the development process in these posts:
 
 - How to Get Medium Stats With JavaScript and Svelte: [Medium](https://javascript.plainenglish.io/how-to-get-medium-stats-with-javascript-and-svelte-part-1-a1d08b96799e) - [Strani Anelli](https://blog.stranianelli.com/medium-stats-with-javascript-and-svelte-part-1/)
+- How To Create Responsive Data Tables With CSS Grid: [Medium](https://betterprogramming.pub/how-to-create-responsive-data-tables-with-css-grid-9e0a37394450) - [Strani Anelli](https://blog.stranianelli.com/how-to-create-responsive-data-tables-with-css-grid/)
 
 _Note that you will need to have [Node.js](https://nodejs.org) installed._
 

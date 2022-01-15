@@ -51,7 +51,10 @@
 </script>
 
 <main>
-  <p>Version: 0.0.9</p>
+  <p>
+    Version: 0.0.10 - I recommend using this app on pc. It is not designed for
+    smartphones.
+  </p>
 
   <button
     on:click={() => {
@@ -163,7 +166,7 @@
   }
   .list-stories {
     width: 100%;
-    height: 400px;
+    height: 80vh;
   }
 
   .synthesis {
