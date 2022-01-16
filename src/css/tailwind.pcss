@@ -2,20 +2,53 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/** Modify your Tailwind layers etc. here **/
+:root {
+  --text-color: rgba(31, 41, 55, 1);
+  --background-color: rgba(243, 244, 246, 1);
+}
+
 @layer base {
+  * {
+    @apply m-0 p-0 border-0 align-baseline text-base;
+  }
+
+  html,
   body {
-    @apply font-sans antialiased text-gray-800 bg-gray-50;
+    @apply flex flex-col relative h-full m-0 box-border leading-relaxed w-screen font-sans antialiased;
+    color: var(--text-color);
+    background-color: var(--background-color);
   }
 
-  h1 {
-    @apply text-7xl text-red-600;
-    &:hover {
-      @apply text-red-500;
-    }
+  body {
+    @apply overflow-y-hidden;
   }
 
-  p {
-    @apply m-2;
+  header {
+    @apply block fixed w-full h-10 top-0 left-0 p-1;
+    background-color: var(--text-color);
+    color: var(--background-color);
+  }
+
+  main {
+    @apply mt-10 overflow-y-auto w-full p-2;
+    height: calc(100% - theme("spacing.16"));
+  }
+
+  footer {
+    @apply block fixed w-full h-6 bottom-0 left-0 text-sm;
+    background-color: var(--text-color);
+    color: var(--background-color);
+  }
+
+  main::-webkit-scrollbar {
+    @apply w-4;
+  }
+  main::-webkit-scrollbar-track {
+    background-color: var(--text-color);
+  }
+  main::-webkit-scrollbar-thumb {
+    @apply border-2 border-solid;
+    background-color: var(--background-color);
+    border-color: var(--text-color);
   }
 }

@@ -34,14 +34,14 @@
   const dailyAverageIncome = div(monthlyIncomeTotal, 30);
 </script>
 
-<section>
-  <header class="row">
+<div class="synthesis">
+  <div class="header row">
     <span />
     <div class="value">
       {monthSynthesis.monthName}
       {monthSynthesis.year}
     </div>
-  </header>
+  </div>
 
   <div class="row row-main">
     <div class="label">Total Monthy Income</div>
@@ -107,14 +107,14 @@
     <div class="label">Daily Average Income (30 days)</div>
     <div class="value">{(dailyAverageIncome / 100).toFixed(2)}</div>
   </div>
-</section>
+</div>
 
 <style lang="postcss">
-  header {
+  .header {
     font-weight: 700;
   }
 
-  section {
+  .synthesis {
     @apply flex flex-col;
     border-bottom: 1px solid var(--text-color, theme("colors.gray.500"));
   }

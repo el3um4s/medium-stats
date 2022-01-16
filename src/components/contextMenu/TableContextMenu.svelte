@@ -21,7 +21,8 @@
 </script>
 
 {#if show}
-  <section
+  <div
+    class="table-context-menu"
     style:visible={show}
     style:left="{x}px"
     style:top="{y}px"
@@ -47,13 +48,13 @@
         }}><ChartBar /></button
       >
     {/if}
-  </section>
+  </div>
 {/if}
 
 <svelte:body on:click={hide} on:wheel={hide} />
 
 <style lang="postcss">
-  section {
+  .table-context-menu {
     position: absolute;
     display: grid;
     border: 1px solid #0003;

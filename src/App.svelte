@@ -50,12 +50,7 @@
   $: currentMonthSynthesis = monthSynthesis(listStories);
 </script>
 
-<main>
-  <p>
-    Version: 0.0.10 - I recommend using this app on pc. It is not designed for
-    smartphones.
-  </p>
-
+<header>
   <button
     on:click={() => {
       window.open(urlMedium, "medium stats");
@@ -68,47 +63,47 @@
     }}>Load dashboard.json</button
   >
 
-  <div>
-    {#if monthlyAmounts.length > 0}
-      <button
-        on:click={() => {
-          showMonthlyAmounts = !showMonthlyAmounts;
-        }}
-        >{#if !showMonthlyAmounts}
-          Show Monthly Amounts
-        {:else}
-          Hide Monthly Amounts
-        {/if}</button
-      >
-    {/if}
+  {#if monthlyAmounts.length > 0}
+    <button
+      on:click={() => {
+        showMonthlyAmounts = !showMonthlyAmounts;
+      }}
+      >{#if !showMonthlyAmounts}
+        Show Monthly Amounts
+      {:else}
+        Hide Monthly Amounts
+      {/if}</button
+    >
+  {/if}
 
-    {#if listStories.length > 0}
-      <button
-        on:click={() => {
-          showListStories = !showListStories;
-        }}
-        >{#if !showListStories}
-          Show List Stories
-        {:else}
-          Hide List Stories
-        {/if}</button
-      >
-    {/if}
+  {#if listStories.length > 0}
+    <button
+      on:click={() => {
+        showListStories = !showListStories;
+      }}
+      >{#if !showListStories}
+        Show List Stories
+      {:else}
+        Hide List Stories
+      {/if}</button
+    >
+  {/if}
 
-    {#if listStories.length > 0}
-      <button
-        on:click={() => {
-          showMonthSynthesis = !showMonthSynthesis;
-        }}
-        >{#if !showMonthSynthesis}
-          Show Month Synthesis
-        {:else}
-          Hide Month Synthesis
-        {/if}</button
-      >
-    {/if}
-  </div>
+  {#if listStories.length > 0}
+    <button
+      on:click={() => {
+        showMonthSynthesis = !showMonthSynthesis;
+      }}
+      >{#if !showMonthSynthesis}
+        Show Month Synthesis
+      {:else}
+        Hide Month Synthesis
+      {/if}</button
+    >
+  {/if}
+</header>
 
+<main>
   {#if monthlyAmounts.length > 0 && showMonthlyAmounts}
     <div class="monthly-amounts" transition:slide>
       <div class="monthly-list">
@@ -147,6 +142,13 @@
     </div>
   {/if}
 </main>
+
+<footer>
+  <p>
+    Version: 0.0.10 - I recommend using this app on pc. It is not designed for
+    smartphones.
+  </p>
+</footer>
 
 <style lang="postcss">
   .monthly-amounts {

@@ -113,7 +113,7 @@
     canChart={chartsColumns.includes(cellData?.key)}
     on:chart-this={chartThis}
   />
-  <header style={gridTemplate}>
+  <div class="header" style={gridTemplate}>
     <div class="cell title" />
     {#each headers as header (header.key)}
       <div
@@ -128,7 +128,7 @@
         {header.title}
       </div>
     {/each}
-  </header>
+  </div>
 
   <section>
     {#each rows as row, index (row.id)}
@@ -163,7 +163,7 @@
   </section>
 
   {#if totals.length > 0}
-    <footer style={gridTemplate}>
+    <div class="footer" style={gridTemplate}>
       <div class="cell total" />
       {#each totals as total}
         <div
@@ -178,7 +178,7 @@
           {convert(total.type, total.value)}
         </div>
       {/each}
-    </footer>
+    </div>
   {/if}
 </article>
 
@@ -188,19 +188,19 @@
     flex-direction: column;
     overflow: hidden;
     height: 100%;
-    width: 100%;
+    /* width: 100%; */
   }
 
-  header,
-  footer {
+  .header,
+  .footer {
     display: grid;
   }
-  header {
+  .header {
     border-bottom: 2px solid var(--text-color, theme("colors.gray.800"));
     width: calc(100% - 1rem);
   }
 
-  footer {
+  .footer {
     border-top: 2px solid var(--text-color, theme("colors.gray.800"));
     border-bottom: 1px solid var(--text-color, theme("colors.gray.800"));
     width: calc(100% - 1rem);
