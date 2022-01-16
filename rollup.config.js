@@ -34,6 +34,31 @@ function serve() {
 	};
 }
 
+// https: //stackoverflow.com/questions/69768925/rollup-plugin-svelte-the-following-packages-did-not-export-their-package-json
+const onwarn = (message, warn) => {
+	const ignored = {
+		PLUGIN_WARNING: ['`package.json`'],
+	};
+	const ignoredKeys = Object.keys(ignored);
+	const ignoredValues = Object.values(ignored);
+
+	for (let i = 0, l = ignoredKeys.length; i < l; ++i) {
+		const ignoredKey = ignoredKeys[i];
+		const ignoredValue = ignoredValues[i];
+
+		for (const ignoredValuePart of ignoredValue) {
+			if (message.code !== ignoredKey ||
+				!message.toString().includes(ignoredValuePart)) {
+				continue;
+			}
+
+			return;
+		}
+	}
+
+	warn(message);
+};
+
 export default {
 	input: 'src/main.ts',
 	output: {
@@ -42,6 +67,7 @@ export default {
 		name: 'app',
 		file: 'public/build/bundle.js'
 	},
+	onwarn,
 	plugins: [
 		svelte({
 			preprocess: sveltePreprocess(),

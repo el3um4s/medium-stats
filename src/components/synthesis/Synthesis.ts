@@ -10,3 +10,13 @@ export interface MonthSynthesis {
   numberArticleOldArticle: number;
   monthsTopStory: number;
 }
+
+export interface EarningForMonthPub {
+  cols: Cols[];
+  rows: [string, number][];
+}
+
+interface Cols {
+  label: string;
+  type: string;
+}

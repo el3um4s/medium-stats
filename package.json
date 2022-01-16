@@ -1,6 +1,6 @@
 {
   "name": "medium-stats",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "How To Get Medium Stats With JavaScript and Svelte",
   "scripts": {
     "clean": "node clean-build.js",
@@ -36,6 +36,7 @@
     "typescript": "^4.5.4"
   },
   "dependencies": {
+    "@google-web-components/google-chart": "^5.0.1",
     "sirv-cli": "^2.0.1"
   },
   "type": "module"

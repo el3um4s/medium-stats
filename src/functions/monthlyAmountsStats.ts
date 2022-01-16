@@ -34,6 +34,8 @@ export const getDataForMonthlyAmountsChart = (
   monthly: MonthlyAmountsStats[]
 ): { data: number[]; labels: string[] } => {
   const data = monthly.map((m) => m.amount).reverse();
-  const labels = monthly.map((m) => m.month.monthName).reverse();
+  const labels = monthly
+    .map((m) => `${m.month.monthName} ${m.month.year.toString().substring(2)}`)
+    .reverse();
   return { data, labels };
 };

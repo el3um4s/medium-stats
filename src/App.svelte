@@ -10,7 +10,10 @@
     getDataForMonthlyAmountsChart,
   } from "./functions/monthlyAmountsStats";
   import { getListStoryAmountStats } from "./functions/storyAmountStats";
-  import { monthSynthesis } from "./functions/monthlySymthesis";
+  import {
+    monthSynthesis,
+    earningForMonthPub,
+  } from "./functions/monthlySymthesis";
 
   import {
     headersTable,
@@ -20,8 +23,9 @@
   } from "./functions/tableStoryAmountStats";
 
   import Table from "./components/tables/Table.svelte";
-  import Histogram from "./components/Histogram.svelte";
   import Synthesis from "./components/synthesis/Synthesis.svelte";
+  import EarningForMonthPub from "./components/synthesis/EarningForMonthPub.svelte";
+  import MonthlyAmounts from "./components/monthlyAmounts/MonthlyAmounts.svelte";
 
   // const urlMedium: string = "https://medium.com/me/stats?format=json&count=100"; // stats.json
   const urlMedium: string =
@@ -48,6 +52,7 @@
   }
 
   $: currentMonthSynthesis = monthSynthesis(listStories);
+  $: earningForMonthPublished = earningForMonthPub(listStories);
 </script>
 
 <header>
@@ -105,21 +110,7 @@
 
 <main>
   {#if monthlyAmounts.length > 0 && showMonthlyAmounts}
-    <div class="monthly-amounts" transition:slide>
-      <div class="monthly-list">
-        <ul>
-          {#each monthlyAmounts as data (data.month)}
-            <li>
-              {data.month.monthName}
-              {data.month.year} - {data.amount / 100} $
-            </li>
-          {/each}
-        </ul>
-      </div>
-      <div class="histogram">
-        <Histogram labels={chartLabels} data={chartData} />
-      </div>
-    </div>
+    <MonthlyAmounts {monthlyAmounts} {chartLabels} {chartData} />
   {/if}
 
   {#if listStories.length > 0 && showListStories}
@@ -137,40 +128,39 @@
   {/if}
 
   {#if listStories.length > 0 && showMonthSynthesis}
-    <div class="synthesis" transition:slide>
-      <Synthesis monthSynthesis={currentMonthSynthesis} />
+    <div class="syntPlusMonthPubs">
+      <div class="synthesis" transition:slide>
+        <Synthesis monthSynthesis={currentMonthSynthesis} />
+      </div>
+      <div class="earningForMonthPublished">
+        <EarningForMonthPub
+          cols={earningForMonthPublished.cols}
+          rows={earningForMonthPublished.rows}
+        />
+      </div>
     </div>
   {/if}
 </main>
 
 <footer>
   <p>
-    Version: 0.0.11 - I recommend using this app on pc. It is not designed for
+    Version: 0.0.12 - I recommend using this app on pc. It is not designed for
     smartphones.
   </p>
 </footer>
 
 <style lang="postcss">
-  .monthly-amounts {
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: auto 1fr;
-  }
-
-  .monthly-list {
-    width: 20ch;
-    height: 300px;
-    overflow-y: auto;
-  }
-  .histogram {
-    width: 100%;
-    height: 100%;
-  }
   .list-stories {
     width: 100%;
     height: 80vh;
   }
 
+  .syntPlusMonthPubs {
+    width: 100%;
+    @apply grid;
+    grid-template-columns: 40ch auto;
+    align-items: center;
+  }
   .synthesis {
     width: 40ch;
   }
