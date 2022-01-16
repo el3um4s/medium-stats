@@ -145,7 +145,7 @@
 
 <footer>
   <p>
-    Version: 0.0.10 - I recommend using this app on pc. It is not designed for
+    Version: 0.0.11 - I recommend using this app on pc. It is not designed for
     smartphones.
   </p>
 </footer>
