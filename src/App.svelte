@@ -4,23 +4,8 @@
   import "./css/tailwind.pcss";
 
   import type { MediumPartnerProgram } from "./Interfaces/MediumPartnerProgram";
-
   import { loadMediumJSONStats } from "./functions/utilityJSON";
 
-  import { getListStoryAmountStats } from "./functions/storyAmountStats";
-  import {
-    monthSynthesis,
-    earningForMonthPub,
-  } from "./functions/monthlySymthesis";
-
-  // import {
-  //   headersTable,
-  //   calculateTotalsTable,
-  //   ordersTable,
-  //   chartsTable,
-  // } from "./functions/tableStoryAmountStats";
-
-  import Table from "./components/Tables/Table.svelte";
   import ListStories from "./components/MediumPartnerProgram/ListStories/ListStories.svelte";
   import MonthlyAmounts from "./components/MediumPartnerProgram/MonthlyAmounts/MonthlyAmounts.svelte";
 
@@ -31,15 +16,6 @@
     "https://medium.com/me/partner/dashboard?format=json"; // dashboard.json
 
   let mediumPartnerProgram: MediumPartnerProgram;
-
-  // $: totalsTable = [...calculateTotalsTable(listStories, headersTable)];
-
-  $: listStories = mediumPartnerProgram
-    ? getListStoryAmountStats(mediumPartnerProgram.payload.postAmounts)
-    : [];
-  $: currentMonthSynthesis = monthSynthesis(listStories);
-  $: earningForMonthPublished = earningForMonthPub(listStories);
-
   let component;
   let componentProps = {};
 
@@ -60,9 +36,7 @@
 
     if (componentType == CurrentMonthSynthesis) {
       return {
-        cols: earningForMonthPublished.cols,
-        rows: earningForMonthPublished.rows,
-        currentMonthSynthesis,
+        mediumPartnerProgram,
       };
     }
   }
@@ -115,7 +89,7 @@
 </header>
 
 <main>
-  <svelte:component this={component} {...componentProps} />
+  <svelte:component this={component} {mediumPartnerProgram} />
 </main>
 
 <footer>

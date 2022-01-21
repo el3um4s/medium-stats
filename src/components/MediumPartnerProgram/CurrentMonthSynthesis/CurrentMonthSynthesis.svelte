@@ -1,11 +1,26 @@
 <script lang="ts">
   import { slide } from "svelte/transition";
+  import type { MediumPartnerProgram } from "../../../Interfaces/MediumPartnerProgram";
+  import { getListStoryAmountStats } from "../../../functions/storyAmountStats";
+  import {
+    monthSynthesis,
+    earningForMonthPub,
+  } from "../../../functions/monthlySynthesis";
+
   import Synthesis from "./Synthesis.svelte";
   import EarningForMonthPub from "./EarningForMonthPub.svelte";
 
-  export let currentMonthSynthesis;
-  export let cols;
-  export let rows;
+  export let mediumPartnerProgram: MediumPartnerProgram;
+
+  $: listStories = getListStoryAmountStats(
+    mediumPartnerProgram.payload.postAmounts
+  );
+
+  $: currentMonthSynthesis = monthSynthesis(listStories);
+  $: earningForMonthPublished = earningForMonthPub(listStories);
+
+  $: cols = earningForMonthPublished.cols;
+  $: rows = earningForMonthPublished.rows;
 </script>
 
 <div class="syntPlusMonthPubs" transition:slide>
