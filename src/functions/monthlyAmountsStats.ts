@@ -1,12 +1,9 @@
-import type { CustomDateTime } from "./dates";
-import { getDate } from "./dates";
-import type { MediumDashboard, MediumDashboard_Month } from "./mediumDashboard";
-
-export interface MonthlyAmountsStats {
-  isCurrentMonth: boolean;
-  month: CustomDateTime;
-  amount: number;
-}
+import { getDate } from "../Interfaces/CustomDateTime";
+import type {
+  MediumDashboard,
+  MediumDashboard_Month,
+  MonthlyAmountsStats,
+} from "../Interfaces/MediumPartnerProgram";
 
 const getMonthStats = (
   month: MediumDashboard_Month,

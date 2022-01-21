@@ -1,10 +1,10 @@
-import type { StoryAmountStats } from "./storyAmountStats";
+import type { StoryAmountStats } from "../Interfaces/MediumPartnerProgram";
 import type {
   MonthSynthesis,
   EarningForMonthPub,
-} from "../components/synthesis/Synthesis";
-import type { CustomDateTime } from "./dates";
-import { getDate } from "./dates";
+} from "../components/MediumPartnerProgram/CurrentMonthSynthesis/Synthesis";
+import type { CustomDateTime } from "../Interfaces/CustomDateTime";
+import { getDate } from "../Interfaces/CustomDateTime";
 
 export const monthSynthesis = (
   listStories: StoryAmountStats[]

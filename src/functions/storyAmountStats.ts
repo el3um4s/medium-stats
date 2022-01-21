@@ -1,18 +1,9 @@
-import type { CustomDateTime } from "./dates";
-import { getDate } from "./dates";
+import { getDate } from "../Interfaces/CustomDateTime";
 
-import type { MediumDashboard_StoryAmountStats } from "./mediumDashboard";
-
-export interface StoryAmountStats {
-  id: string;
-  title: string;
-  amountMonth: number;
-  amountTot: number;
-  homeCollectionId: string;
-  wordCount: number;
-  readingTime: number;
-  firstPublishedAt: CustomDateTime;
-}
+import type {
+  MediumDashboard_StoryAmountStats,
+  StoryAmountStats,
+} from "../Interfaces/MediumPartnerProgram";
 
 const getStoryAmountStats = (
   story: MediumDashboard_StoryAmountStats

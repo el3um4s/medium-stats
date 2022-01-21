@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Table_Labels, Table_Totals, Table_Orders } from "./Table";
-  import type { CustomDateTime } from "../../functions/dates";
+  import type { CustomDateTime } from "../../Interfaces/CustomDateTime";
 
   export let rows = [];
   export let headers: Table_Labels[] = [];

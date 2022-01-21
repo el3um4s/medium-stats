@@ -1,4 +1,4 @@
-import type { MediumDashboard } from "./mediumDashboard";
+import type { MediumDashboard } from "../Interfaces/MediumPartnerProgram";
 
 const sanitizeOriginalStats = (contents: string) => {
   const result = contents.startsWith(`])}while(1);</x>`)

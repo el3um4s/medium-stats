@@ -3,7 +3,8 @@
 
   import "./css/tailwind.pcss";
 
-  import type { MediumDashboard } from "./functions/mediumDashboard";
+  import type { MediumDashboard } from "./Interfaces/MediumPartnerProgram";
+
   import { loadMediumJSONStats } from "./functions/utilityJSON";
   import {
     getMonthlyAmounts,
@@ -22,10 +23,10 @@
     chartsTable,
   } from "./functions/tableStoryAmountStats";
 
-  import Table from "./components/tables/Table.svelte";
-  import MonthlyAmounts from "./components/monthlyAmounts/MonthlyAmounts.svelte";
+  import Table from "./Components/Tables/Table.svelte";
+  import MonthlyAmounts from "./Components/MediumPartnerProgram/MonthlyAmounts/MonthlyAmounts.svelte";
 
-  import CurrentMonthSynthesis from "./components/synthesis/CurrentMonthSynthesis.svelte";
+  import CurrentMonthSynthesis from "./Components/MediumPartnerProgram/CurrentMonthSynthesis/CurrentMonthSynthesis.svelte";
 
   // const urlMedium: string = "https://medium.com/me/stats?format=json&count=100"; // stats.json
   const urlMedium: string =
@@ -87,6 +88,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Medium Stats</title>
+</svelte:head>
+
 <header>
   <button
     on:click={() => {
@@ -140,7 +145,7 @@
 
 <footer>
   <p>
-    Version: 0.0.13 - I recommend using this app on pc. It is not designed for
+    Version: 0.0.15 - I recommend using this app on pc. It is not designed for
     smartphones.
   </p>
 </footer>

@@ -1,3 +1,5 @@
+import type { CustomDateTime } from "./CustomDateTime";
+
 interface MediumDashboard_Payload {
   currentMonthAmount: MediumDashboard_Month;
   completedMonthlyAmounts: MediumDashboard_Month[];
@@ -26,4 +28,21 @@ export interface MediumDashboard_StoryAmountStats {
       readingTime: number;
     };
   };
+}
+
+export interface MonthlyAmountsStats {
+  isCurrentMonth: boolean;
+  month: CustomDateTime;
+  amount: number;
+}
+
+export interface StoryAmountStats {
+  id: string;
+  title: string;
+  amountMonth: number;
+  amountTot: number;
+  homeCollectionId: string;
+  wordCount: number;
+  readingTime: number;
+  firstPublishedAt: CustomDateTime;
 }
