@@ -40,32 +40,25 @@
   $: currentMonthSynthesis = monthSynthesis(listStories);
   $: earningForMonthPublished = earningForMonthPub(listStories);
 
-  let componentName: string;
   let component;
   let componentProps = {};
 
-  $: componentProps = setProps(componentName);
+  $: componentProps = setProps(component);
 
-  function setProps(name: String) {
-    if (component == MonthlyAmounts) {
+  function setProps(componentType) {
+    if (componentType == MonthlyAmounts) {
       return {
         mediumPartnerProgram,
       };
     }
 
-    // if (name === "MonthlyAmounts") {
-    //   return {
-    //     mediumPartnerProgram,
-    //   };
-    // }
-
-    if (name === "ListStories") {
+    if (componentType == ListStories) {
       return {
         mediumPartnerProgram,
       };
     }
 
-    if (name === "CurrentMonthSynthesis") {
+    if (componentType == CurrentMonthSynthesis) {
       return {
         cols: earningForMonthPublished.cols,
         rows: earningForMonthPublished.rows,
@@ -88,10 +81,8 @@
 
   <button
     on:click={async () => {
-      componentName = "";
       component = null;
       mediumPartnerProgram = await loadMediumJSONStats();
-      componentName = "CurrentMonthSynthesis";
       component = CurrentMonthSynthesis;
     }}>Load dashboard.json</button
   >
@@ -99,7 +90,6 @@
   {#if mediumPartnerProgram}
     <button
       on:click={() => {
-        componentName = "MonthlyAmounts";
         component = MonthlyAmounts;
       }}
     >
@@ -108,7 +98,6 @@
 
     <button
       on:click={() => {
-        componentName = "ListStories";
         component = ListStories;
       }}
     >
@@ -117,7 +106,6 @@
 
     <button
       on:click={() => {
-        componentName = "CurrentMonthSynthesis";
         component = CurrentMonthSynthesis;
       }}
     >
