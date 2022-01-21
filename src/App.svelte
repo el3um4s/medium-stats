@@ -31,22 +31,22 @@
   const urlMedium: string =
     "https://medium.com/me/partner/dashboard?format=json"; // dashboard.json
 
-  let listStories = [];
-  let monthlyAmounts = [];
   let chartData = [];
   let chartLabels = [];
+
+  let mediumPartnerProgram: MediumDashboard;
 
   $: chartData = [...getDataForMonthlyAmountsChart(monthlyAmounts).data];
   $: chartLabels = [...getDataForMonthlyAmountsChart(monthlyAmounts).labels];
 
   $: totalsTable = [...calculateTotalsTable(listStories, headersTable)];
 
-  async function loadDashboardJSON() {
-    const stats: MediumDashboard = await loadMediumJSONStats();
-    monthlyAmounts = [...getMonthlyAmounts(stats)];
-    listStories = [...getListStoryAmountStats(stats.payload.postAmounts)];
-  }
-
+  $: monthlyAmounts = mediumPartnerProgram
+    ? getMonthlyAmounts(mediumPartnerProgram)
+    : [];
+  $: listStories = mediumPartnerProgram
+    ? getListStoryAmountStats(mediumPartnerProgram.payload.postAmounts)
+    : [];
   $: currentMonthSynthesis = monthSynthesis(listStories);
   $: earningForMonthPublished = earningForMonthPub(listStories);
 
@@ -96,13 +96,15 @@
 
   <button
     on:click={async () => {
-      await loadDashboardJSON();
+      componentName = "";
+      component = null;
+      mediumPartnerProgram = await loadMediumJSONStats();
       componentName = "CurrentMonthSynthesis";
       component = CurrentMonthSynthesis;
     }}>Load dashboard.json</button
   >
 
-  {#if monthlyAmounts.length > 0}
+  {#if mediumPartnerProgram}
     <button
       on:click={() => {
         componentName = "MonthlyAmounts";
@@ -111,9 +113,7 @@
     >
       Monthly Amounts
     </button>
-  {/if}
 
-  {#if listStories.length > 0}
     <button
       on:click={() => {
         componentName = "Table";
@@ -122,9 +122,7 @@
     >
       List Stories
     </button>
-  {/if}
 
-  {#if listStories.length > 0}
     <button
       on:click={() => {
         componentName = "CurrentMonthSynthesis";
