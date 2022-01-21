@@ -12,34 +12,11 @@
   import CurrentMonthSynthesis from "./components/MediumPartnerProgram/CurrentMonthSynthesis/CurrentMonthSynthesis.svelte";
 
   // const urlMedium: string = "https://medium.com/me/stats?format=json&count=100"; // stats.json
-  const urlMedium: string =
+  const urlMediumPartnerProgram: string =
     "https://medium.com/me/partner/dashboard?format=json"; // dashboard.json
 
   let mediumPartnerProgram: MediumPartnerProgram;
   let component;
-  let componentProps = {};
-
-  $: componentProps = setProps(component);
-
-  function setProps(componentType) {
-    if (componentType == MonthlyAmounts) {
-      return {
-        mediumPartnerProgram,
-      };
-    }
-
-    if (componentType == ListStories) {
-      return {
-        mediumPartnerProgram,
-      };
-    }
-
-    if (componentType == CurrentMonthSynthesis) {
-      return {
-        mediumPartnerProgram,
-      };
-    }
-  }
 </script>
 
 <svelte:head>
@@ -49,7 +26,7 @@
 <header>
   <button
     on:click={() => {
-      window.open(urlMedium, "medium stats");
+      window.open(urlMediumPartnerProgram, "medium stats");
     }}>Save dashboard.json</button
   >
 
@@ -94,7 +71,7 @@
 
 <footer>
   <p>
-    Version: 0.0.15 - I recommend using this app on pc. It is not designed for
+    Version: 0.0.16 - I recommend using this app on pc. It is not designed for
     smartphones.
   </p>
 </footer>
