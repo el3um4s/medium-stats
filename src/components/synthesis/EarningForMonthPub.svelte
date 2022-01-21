@@ -3,6 +3,7 @@
 
   export let cols = [];
   export let rows = [];
+  export let title = "";
 </script>
 
 <div>
@@ -12,7 +13,7 @@
     {cols}
     {rows}
     options={{
-      title: "Earnings per month of publication",
+      title: title,
       backgroundColor: "transparent",
     }}
   />

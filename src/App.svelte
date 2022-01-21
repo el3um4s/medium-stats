@@ -128,14 +128,15 @@
   {/if}
 
   {#if listStories.length > 0 && showMonthSynthesis}
-    <div class="syntPlusMonthPubs">
-      <div class="synthesis" transition:slide>
+    <div class="syntPlusMonthPubs" transition:slide>
+      <div class="synthesis">
         <Synthesis monthSynthesis={currentMonthSynthesis} />
       </div>
       <div class="earningForMonthPublished">
         <EarningForMonthPub
           cols={earningForMonthPublished.cols}
           rows={earningForMonthPublished.rows}
+          title="Earning Per Month of Publication"
         />
       </div>
     </div>
