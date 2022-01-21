@@ -1,4 +1,4 @@
-import type { MediumDashboard } from "../Interfaces/MediumPartnerProgram";
+import type { MediumPartnerProgram } from "../Interfaces/MediumPartnerProgram";
 
 const sanitizeOriginalStats = (contents: string) => {
   const result = contents.startsWith(`])}while(1);</x>`)
@@ -7,7 +7,7 @@ const sanitizeOriginalStats = (contents: string) => {
   return result;
 };
 
-export const loadMediumJSONStats = async (): Promise<MediumDashboard> => {
+export const loadMediumJSONStats = async (): Promise<MediumPartnerProgram> => {
   let [fileHandle] = await window["showOpenFilePicker"]();
   const file = await fileHandle.getFile();
   const contents = await file.text();

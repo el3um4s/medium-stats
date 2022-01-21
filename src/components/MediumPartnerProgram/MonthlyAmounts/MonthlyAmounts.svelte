@@ -1,10 +1,18 @@
 <script lang="ts">
   import { slide } from "svelte/transition";
   import GoogleChartColumn from "../../GoogleCharts/GoogleChartColumn.svelte";
+  import type { MediumPartnerProgram } from "../../../Interfaces/MediumPartnerProgram";
 
-  export let monthlyAmounts = [];
-  export let chartData = [];
-  export let chartLabels = [];
+  import {
+    getMonthlyAmounts,
+    getDataForMonthlyAmountsChart,
+  } from "./monthlyAmounts";
+
+  export let mediumPartnerProgram: MediumPartnerProgram;
+
+  $: monthlyAmounts = getMonthlyAmounts(mediumPartnerProgram);
+  $: chartData = [...getDataForMonthlyAmountsChart(monthlyAmounts).data];
+  $: chartLabels = [...getDataForMonthlyAmountsChart(monthlyAmounts).labels];
 
   $: data = chartLabels.map((label, index) => [label, chartData[index] / 100]);
 </script>

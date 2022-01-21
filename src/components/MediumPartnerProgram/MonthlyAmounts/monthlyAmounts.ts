@@ -1,9 +1,9 @@
-import { getDate } from "../Interfaces/CustomDateTime";
+import { getDate } from "../../../Interfaces/CustomDateTime";
 import type {
-  MediumDashboard,
+  MediumPartnerProgram,
   MediumDashboard_Month,
   MonthlyAmountsStats,
-} from "../Interfaces/MediumPartnerProgram";
+} from "../../../Interfaces/MediumPartnerProgram";
 
 const getMonthStats = (
   month: MediumDashboard_Month,
@@ -17,7 +17,7 @@ const getMonthStats = (
 };
 
 export const getMonthlyAmounts = (
-  stats: MediumDashboard
+  stats: MediumPartnerProgram
 ): MonthlyAmountsStats[] => {
   const currentMonth = getMonthStats(stats.payload.currentMonthAmount, true);
   const previousMonths = stats.payload.completedMonthlyAmounts.map((month) => {

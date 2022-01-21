@@ -3,48 +3,37 @@
 
   import "./css/tailwind.pcss";
 
-  import type { MediumDashboard } from "./Interfaces/MediumPartnerProgram";
+  import type { MediumPartnerProgram } from "./Interfaces/MediumPartnerProgram";
 
   import { loadMediumJSONStats } from "./functions/utilityJSON";
-  import {
-    getMonthlyAmounts,
-    getDataForMonthlyAmountsChart,
-  } from "./functions/monthlyAmountsStats";
+
   import { getListStoryAmountStats } from "./functions/storyAmountStats";
   import {
     monthSynthesis,
     earningForMonthPub,
   } from "./functions/monthlySymthesis";
 
-  import {
-    headersTable,
-    calculateTotalsTable,
-    ordersTable,
-    chartsTable,
-  } from "./functions/tableStoryAmountStats";
+  // import {
+  //   headersTable,
+  //   calculateTotalsTable,
+  //   ordersTable,
+  //   chartsTable,
+  // } from "./functions/tableStoryAmountStats";
 
-  import Table from "./Components/Tables/Table.svelte";
-  import MonthlyAmounts from "./Components/MediumPartnerProgram/MonthlyAmounts/MonthlyAmounts.svelte";
+  import Table from "./components/Tables/Table.svelte";
+  import ListStories from "./components/MediumPartnerProgram/ListStories/ListStories.svelte";
+  import MonthlyAmounts from "./components/MediumPartnerProgram/MonthlyAmounts/MonthlyAmounts.svelte";
 
-  import CurrentMonthSynthesis from "./Components/MediumPartnerProgram/CurrentMonthSynthesis/CurrentMonthSynthesis.svelte";
+  import CurrentMonthSynthesis from "./components/MediumPartnerProgram/CurrentMonthSynthesis/CurrentMonthSynthesis.svelte";
 
   // const urlMedium: string = "https://medium.com/me/stats?format=json&count=100"; // stats.json
   const urlMedium: string =
     "https://medium.com/me/partner/dashboard?format=json"; // dashboard.json
 
-  let chartData = [];
-  let chartLabels = [];
+  let mediumPartnerProgram: MediumPartnerProgram;
 
-  let mediumPartnerProgram: MediumDashboard;
+  // $: totalsTable = [...calculateTotalsTable(listStories, headersTable)];
 
-  $: chartData = [...getDataForMonthlyAmountsChart(monthlyAmounts).data];
-  $: chartLabels = [...getDataForMonthlyAmountsChart(monthlyAmounts).labels];
-
-  $: totalsTable = [...calculateTotalsTable(listStories, headersTable)];
-
-  $: monthlyAmounts = mediumPartnerProgram
-    ? getMonthlyAmounts(mediumPartnerProgram)
-    : [];
   $: listStories = mediumPartnerProgram
     ? getListStoryAmountStats(mediumPartnerProgram.payload.postAmounts)
     : [];
@@ -58,23 +47,21 @@
   $: componentProps = setProps(componentName);
 
   function setProps(name: String) {
-    if (name === "MonthlyAmounts") {
+    if (component == MonthlyAmounts) {
       return {
-        monthlyAmounts,
-        chartLabels,
-        chartData,
+        mediumPartnerProgram,
       };
     }
 
-    if (name === "Table") {
+    // if (name === "MonthlyAmounts") {
+    //   return {
+    //     mediumPartnerProgram,
+    //   };
+    // }
+
+    if (name === "ListStories") {
       return {
-        rows: listStories,
-        headers: headersTable,
-        totals: totalsTable,
-        orders: ordersTable,
-        chartsColumns: chartsTable,
-        chartColumn: "title",
-        chartValue: "amountMonth",
+        mediumPartnerProgram,
       };
     }
 
@@ -121,8 +108,8 @@
 
     <button
       on:click={() => {
-        componentName = "Table";
-        component = Table;
+        componentName = "ListStories";
+        component = ListStories;
       }}
     >
       List Stories

@@ -2,8 +2,8 @@ import type {
   Table_Labels,
   Table_Totals,
   Table_Orders,
-} from "../components/Tables/Table";
-import type { StoryAmountStats } from "../Interfaces/MediumPartnerProgram";
+} from "../../Tables/Table";
+import type { StoryAmountStats } from "../../../Interfaces/MediumPartnerProgram";
 
 export const headersTable: Table_Labels[] = [
   { key: "firstPublishedAt", title: "Date", type: "date", width: "12ch" },

@@ -1,13 +1,12 @@
 import type { CustomDateTime } from "./CustomDateTime";
 
+export interface MediumPartnerProgram {
+  payload: MediumDashboard_Payload;
+}
 interface MediumDashboard_Payload {
   currentMonthAmount: MediumDashboard_Month;
   completedMonthlyAmounts: MediumDashboard_Month[];
   postAmounts: MediumDashboard_StoryAmountStats[];
-}
-
-export interface MediumDashboard {
-  payload: MediumDashboard_Payload;
 }
 
 export interface MediumDashboard_Month {
