@@ -23,9 +23,9 @@
   } from "./functions/tableStoryAmountStats";
 
   import Table from "./components/tables/Table.svelte";
-  import Synthesis from "./components/synthesis/Synthesis.svelte";
-  import EarningForMonthPub from "./components/synthesis/EarningForMonthPub.svelte";
   import MonthlyAmounts from "./components/monthlyAmounts/MonthlyAmounts.svelte";
+
+  import CurrentMonthSynthesis from "./components/synthesis/CurrentMonthSynthesis.svelte";
 
   // const urlMedium: string = "https://medium.com/me/stats?format=json&count=100"; // stats.json
   const urlMedium: string =
@@ -35,10 +35,6 @@
   let monthlyAmounts = [];
   let chartData = [];
   let chartLabels = [];
-
-  $: showMonthlyAmounts = monthlyAmounts.length > 0;
-  $: showListStories = listStories.length > 0;
-  $: showMonthSynthesis = listStories.length > 0;
 
   $: chartData = [...getDataForMonthlyAmountsChart(monthlyAmounts).data];
   $: chartLabels = [...getDataForMonthlyAmountsChart(monthlyAmounts).labels];
@@ -53,6 +49,42 @@
 
   $: currentMonthSynthesis = monthSynthesis(listStories);
   $: earningForMonthPublished = earningForMonthPub(listStories);
+
+  let componentName: string;
+  let component;
+  let componentProps = {};
+
+  $: componentProps = setProps(componentName);
+
+  function setProps(name: String) {
+    if (name === "MonthlyAmounts") {
+      return {
+        monthlyAmounts,
+        chartLabels,
+        chartData,
+      };
+    }
+
+    if (name === "Table") {
+      return {
+        rows: listStories,
+        headers: headersTable,
+        totals: totalsTable,
+        orders: ordersTable,
+        chartsColumns: chartsTable,
+        chartColumn: "title",
+        chartValue: "amountMonth",
+      };
+    }
+
+    if (name === "CurrentMonthSynthesis") {
+      return {
+        cols: earningForMonthPublished.cols,
+        rows: earningForMonthPublished.rows,
+        currentMonthSynthesis,
+      };
+    }
+  }
 </script>
 
 <header>
@@ -65,104 +97,55 @@
   <button
     on:click={async () => {
       await loadDashboardJSON();
+      componentName = "CurrentMonthSynthesis";
+      component = CurrentMonthSynthesis;
     }}>Load dashboard.json</button
   >
 
   {#if monthlyAmounts.length > 0}
     <button
       on:click={() => {
-        showMonthlyAmounts = !showMonthlyAmounts;
+        componentName = "MonthlyAmounts";
+        component = MonthlyAmounts;
       }}
-      >{#if !showMonthlyAmounts}
-        Show Monthly Amounts
-      {:else}
-        Hide Monthly Amounts
-      {/if}</button
     >
+      Monthly Amounts
+    </button>
   {/if}
 
   {#if listStories.length > 0}
     <button
       on:click={() => {
-        showListStories = !showListStories;
+        componentName = "Table";
+        component = Table;
       }}
-      >{#if !showListStories}
-        Show List Stories
-      {:else}
-        Hide List Stories
-      {/if}</button
     >
+      List Stories
+    </button>
   {/if}
 
   {#if listStories.length > 0}
     <button
       on:click={() => {
-        showMonthSynthesis = !showMonthSynthesis;
+        componentName = "CurrentMonthSynthesis";
+        component = CurrentMonthSynthesis;
       }}
-      >{#if !showMonthSynthesis}
-        Show Month Synthesis
-      {:else}
-        Hide Month Synthesis
-      {/if}</button
     >
+      Month Synthesis
+    </button>
   {/if}
 </header>
 
 <main>
-  {#if monthlyAmounts.length > 0 && showMonthlyAmounts}
-    <MonthlyAmounts {monthlyAmounts} {chartLabels} {chartData} />
-  {/if}
-
-  {#if listStories.length > 0 && showListStories}
-    <div class="list-stories" transition:slide>
-      <Table
-        rows={listStories}
-        headers={headersTable}
-        totals={totalsTable}
-        orders={ordersTable}
-        chartsColumns={chartsTable}
-        chartColumn="title"
-        chartValue="amountMonth"
-      />
-    </div>
-  {/if}
-
-  {#if listStories.length > 0 && showMonthSynthesis}
-    <div class="syntPlusMonthPubs" transition:slide>
-      <div class="synthesis">
-        <Synthesis monthSynthesis={currentMonthSynthesis} />
-      </div>
-      <div class="earningForMonthPublished">
-        <EarningForMonthPub
-          cols={earningForMonthPublished.cols}
-          rows={earningForMonthPublished.rows}
-          title="Earning Per Month of Publication"
-        />
-      </div>
-    </div>
-  {/if}
+  <svelte:component this={component} {...componentProps} />
 </main>
 
 <footer>
   <p>
-    Version: 0.0.12 - I recommend using this app on pc. It is not designed for
+    Version: 0.0.13 - I recommend using this app on pc. It is not designed for
     smartphones.
   </p>
 </footer>
 
 <style lang="postcss">
-  .list-stories {
-    width: 100%;
-    height: 80vh;
-  }
-
-  .syntPlusMonthPubs {
-    width: 100%;
-    @apply grid;
-    grid-template-columns: 40ch auto;
-    align-items: center;
-  }
-  .synthesis {
-    width: 40ch;
-  }
 </style>

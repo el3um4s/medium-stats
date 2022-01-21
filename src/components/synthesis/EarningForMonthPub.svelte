@@ -21,7 +21,8 @@
 
 <style lang="postcss">
   google-chart {
-    width: 100%;
+    /* width: 100%; */
+    width: 480px;
     height: 480px;
   }
 </style>
