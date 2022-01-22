@@ -1,49 +1,48 @@
 <script lang="ts">
   import { slide } from "svelte/transition";
-  import type { MediumPartnerProgram } from "../../../Interfaces/MediumPartnerProgram";
+  import type { PartnerProgram } from "../../../Interfaces/MediumPartnerProgram";
   import { getListStoryAmountStats } from "../../../functions/storyAmountStats";
-  import {
-    monthSynthesis,
-    earningForMonthPub,
-  } from "../../../functions/monthlySynthesis";
+  import { earningForMonthPub, earningForMonthStory } from "./SynthesisCharts";
 
   import Synthesis from "./Synthesis.svelte";
-  import EarningForMonthPub from "./EarningForMonthPub.svelte";
+  import GoogleChartPie from "../../GoogleCharts/GoogleChartPie.svelte";
 
-  export let mediumPartnerProgram: MediumPartnerProgram;
+  export let mediumPartnerProgram: PartnerProgram;
 
-  $: listStories = getListStoryAmountStats(
-    mediumPartnerProgram.payload.postAmounts
-  );
-
-  $: currentMonthSynthesis = monthSynthesis(listStories);
+  $: listStories = getListStoryAmountStats(mediumPartnerProgram);
   $: earningForMonthPublished = earningForMonthPub(listStories);
-
-  $: cols = earningForMonthPublished.cols;
-  $: rows = earningForMonthPublished.rows;
+  $: earningForStoryPublished = earningForMonthStory(listStories);
 </script>
 
-<div class="syntPlusMonthPubs" transition:slide>
-  <div class="synthesis">
-    <Synthesis monthSynthesis={currentMonthSynthesis} />
-  </div>
-  <div class="earningForMonthPublished">
-    <EarningForMonthPub
-      {cols}
-      {rows}
+<section class="syntPlusMonthPubs" transition:slide>
+  <Synthesis {mediumPartnerProgram} />
+
+  <div class="charts">
+    <GoogleChartPie
+      cols={earningForMonthPublished.cols}
+      rows={earningForMonthPublished.rows}
       title="Earning Per Month of Publication"
     />
+    <GoogleChartPie
+      cols={earningForStoryPublished.cols}
+      rows={earningForStoryPublished.rows}
+      title="Earning Per Story"
+    />
   </div>
-</div>
+</section>
 
 <style lang="postcss">
-  .syntPlusMonthPubs {
+  section {
     width: 100%;
-    @apply grid;
+    display: grid;
     grid-template-columns: 40ch auto;
-    align-items: center;
+    align-items: start;
   }
-  .synthesis {
-    width: 40ch;
+
+  .charts {
+    display: grid;
+    gap: 1rem;
+    align-items: flex-start;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   }
 </style>

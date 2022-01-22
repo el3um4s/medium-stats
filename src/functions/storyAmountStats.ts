@@ -1,27 +1,24 @@
 import { getDate } from "../Interfaces/CustomDateTime";
 
 import type {
-  MediumDashboard_StoryAmountStats,
-  StoryAmountStats,
+  PartnerProgram_Analysis_ListStories,
+  PartnerProgram,
 } from "../Interfaces/MediumPartnerProgram";
 
-const getStoryAmountStats = (
-  story: MediumDashboard_StoryAmountStats
-): StoryAmountStats => {
-  return {
-    id: story.post.id,
-    title: story.post.title,
-    amountMonth: story.amount,
-    amountTot: story.totalAmountPaidToDate,
-    homeCollectionId: story.post.homeCollectionId,
-    wordCount: story.post.virtuals.wordCount,
-    readingTime: story.post.virtuals.readingTime,
-    firstPublishedAt: getDate(story.post.firstPublishedAt),
-  };
-};
-
 export const getListStoryAmountStats = (
-  list: MediumDashboard_StoryAmountStats[]
-): StoryAmountStats[] => {
-  return list.map((story) => getStoryAmountStats(story));
+  mediumPartnerProgram: PartnerProgram
+): PartnerProgram_Analysis_ListStories[] => {
+  const list = mediumPartnerProgram.payload.postAmounts;
+  return list.map((story) => {
+    return {
+      id: story.post.id,
+      title: story.post.title,
+      amountMonth: story.amount,
+      amountTot: story.totalAmountPaidToDate,
+      homeCollectionId: story.post.homeCollectionId,
+      wordCount: story.post.virtuals.wordCount,
+      readingTime: story.post.virtuals.readingTime,
+      firstPublishedAt: getDate(story.post.firstPublishedAt),
+    };
+  });
 };

@@ -1,20 +1,21 @@
 import type { CustomDateTime } from "./CustomDateTime";
 
-export interface MediumPartnerProgram {
-  payload: MediumDashboard_Payload;
-}
-interface MediumDashboard_Payload {
-  currentMonthAmount: MediumDashboard_Month;
-  completedMonthlyAmounts: MediumDashboard_Month[];
-  postAmounts: MediumDashboard_StoryAmountStats[];
+export interface PartnerProgram {
+  payload: PartnerProgram_Payload;
 }
 
-export interface MediumDashboard_Month {
+interface PartnerProgram_Payload {
+  currentMonthAmount: PartnerProgram_MonthAmount;
+  completedMonthlyAmounts: PartnerProgram_MonthAmount[];
+  postAmounts: PartnerProgram_PostAmounts[];
+}
+
+interface PartnerProgram_MonthAmount {
   periodStartedAt: number;
   amount: number;
 }
 
-export interface MediumDashboard_StoryAmountStats {
+interface PartnerProgram_PostAmounts {
   amount: number;
   totalAmountPaidToDate: number;
   post: {
@@ -29,13 +30,13 @@ export interface MediumDashboard_StoryAmountStats {
   };
 }
 
-export interface MonthlyAmountsStats {
+export interface PartnerProgram_Analysis_Month {
   isCurrentMonth: boolean;
   month: CustomDateTime;
   amount: number;
 }
 
-export interface StoryAmountStats {
+export interface PartnerProgram_Analysis_ListStories {
   id: string;
   title: string;
   amountMonth: number;

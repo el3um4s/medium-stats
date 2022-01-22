@@ -1,6 +1,6 @@
 <script lang="ts">
   import Table from "../../Tables/Table.svelte";
-  import type { MediumPartnerProgram } from "../../../Interfaces/MediumPartnerProgram";
+  import type { PartnerProgram } from "../../../Interfaces/MediumPartnerProgram";
   import { getListStoryAmountStats } from "../../../functions/storyAmountStats";
 
   import {
@@ -10,14 +10,12 @@
     chartsTable,
   } from "./listStories";
 
-  export let mediumPartnerProgram: MediumPartnerProgram;
+  export let mediumPartnerProgram: PartnerProgram;
 
   let chartColumn = "title";
   let chartValue = "amountMonth";
 
-  $: listStories = getListStoryAmountStats(
-    mediumPartnerProgram.payload.postAmounts
-  );
+  $: listStories = getListStoryAmountStats(mediumPartnerProgram);
 
   $: totalsTable = [...calculateTotalsTable(listStories, headersTable)];
 

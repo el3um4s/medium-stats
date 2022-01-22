@@ -1,14 +1,14 @@
 <script lang="ts">
   import { slide } from "svelte/transition";
   import GoogleChartColumn from "../../GoogleCharts/GoogleChartColumn.svelte";
-  import type { MediumPartnerProgram } from "../../../Interfaces/MediumPartnerProgram";
+  import type { PartnerProgram } from "../../../Interfaces/MediumPartnerProgram";
 
   import {
     getMonthlyAmounts,
     getDataForMonthlyAmountsChart,
   } from "./monthlyAmounts";
 
-  export let mediumPartnerProgram: MediumPartnerProgram;
+  export let mediumPartnerProgram: PartnerProgram;
 
   $: monthlyAmounts = getMonthlyAmounts(mediumPartnerProgram);
   $: chartData = [...getDataForMonthlyAmountsChart(monthlyAmounts).data];

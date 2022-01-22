@@ -3,7 +3,7 @@
   import "@google-web-components/google-chart";
 
   export let column: String[] = [];
-  export let data = [];
+  export let data: (string | number)[][] = [];
   export let title: String = "";
   export let colors: String[] = [];
 

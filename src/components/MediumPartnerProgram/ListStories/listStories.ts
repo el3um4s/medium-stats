@@ -3,7 +3,7 @@ import type {
   Table_Totals,
   Table_Orders,
 } from "../../Tables/Table";
-import type { StoryAmountStats } from "../../../Interfaces/MediumPartnerProgram";
+import type { PartnerProgram_Analysis_ListStories } from "../../../Interfaces/MediumPartnerProgram";
 
 export const headersTable: Table_Labels[] = [
   { key: "firstPublishedAt", title: "Date", type: "date", width: "12ch" },
@@ -34,55 +34,65 @@ export const headersTable: Table_Labels[] = [
 export const ordersTable: Table_Orders[] = [
   {
     key: "firstPublishedAt",
-    functionOrderASC: (key: string, list: StoryAmountStats[]) => [
-      ...orderDatesASC(key, list),
-    ],
-    functionOrderDESC: (key: string, list: StoryAmountStats[]) => [
-      ...orderDatesDESC(key, list),
-    ],
+    functionOrderASC: (
+      key: string,
+      list: PartnerProgram_Analysis_ListStories[]
+    ) => [...orderDatesASC(key, list)],
+    functionOrderDESC: (
+      key: string,
+      list: PartnerProgram_Analysis_ListStories[]
+    ) => [...orderDatesDESC(key, list)],
   },
   {
     key: "amountTot",
-    functionOrderASC: (key: string, list: StoryAmountStats[]) => [
-      ...orderNumbersASC(key, list),
-    ],
-    functionOrderDESC: (key: string, list: StoryAmountStats[]) => [
-      ...orderNumbersDESC(key, list),
-    ],
+    functionOrderASC: (
+      key: string,
+      list: PartnerProgram_Analysis_ListStories[]
+    ) => [...orderNumbersASC(key, list)],
+    functionOrderDESC: (
+      key: string,
+      list: PartnerProgram_Analysis_ListStories[]
+    ) => [...orderNumbersDESC(key, list)],
   },
   {
     key: "amountMonth",
-    functionOrderASC: (key: string, list: StoryAmountStats[]) => [
-      ...orderNumbersASC(key, list),
-    ],
-    functionOrderDESC: (key: string, list: StoryAmountStats[]) => [
-      ...orderNumbersDESC(key, list),
-    ],
+    functionOrderASC: (
+      key: string,
+      list: PartnerProgram_Analysis_ListStories[]
+    ) => [...orderNumbersASC(key, list)],
+    functionOrderDESC: (
+      key: string,
+      list: PartnerProgram_Analysis_ListStories[]
+    ) => [...orderNumbersDESC(key, list)],
   },
   {
     key: "title",
-    functionOrderASC: (key: string, list: StoryAmountStats[]) => [
-      ...orderStringsASC(key, list),
-    ],
-    functionOrderDESC: (key: string, list: StoryAmountStats[]) => [
-      ...orderStringsDESC(key, list),
-    ],
+    functionOrderASC: (
+      key: string,
+      list: PartnerProgram_Analysis_ListStories[]
+    ) => [...orderStringsASC(key, list)],
+    functionOrderDESC: (
+      key: string,
+      list: PartnerProgram_Analysis_ListStories[]
+    ) => [...orderStringsDESC(key, list)],
   },
   {
     key: "wordCount",
-    functionOrderASC: (key: string, list: StoryAmountStats[]) => [
-      ...orderNumbersASC(key, list),
-    ],
-    functionOrderDESC: (key: string, list: StoryAmountStats[]) => [
-      ...orderNumbersDESC(key, list),
-    ],
+    functionOrderASC: (
+      key: string,
+      list: PartnerProgram_Analysis_ListStories[]
+    ) => [...orderNumbersASC(key, list)],
+    functionOrderDESC: (
+      key: string,
+      list: PartnerProgram_Analysis_ListStories[]
+    ) => [...orderNumbersDESC(key, list)],
   },
 ];
 
 export const chartsTable: string[] = ["amountTot", "amountMonth", "wordCount"];
 
 export const calculateTotalsTable = (
-  listStories: StoryAmountStats[],
+  listStories: PartnerProgram_Analysis_ListStories[],
   headersTable: Table_Labels[]
 ): Table_Totals[] => {
   const result = headersTable.map((header) => {
@@ -96,7 +106,7 @@ export const calculateTotalsTable = (
 };
 
 function calculateTotalKey(
-  listStories: StoryAmountStats[],
+  listStories: PartnerProgram_Analysis_ListStories[],
   key: string
 ): number {
   return listStories.reduce((previous, current) => {
@@ -106,8 +116,8 @@ function calculateTotalKey(
 
 function orderStringsASC(
   key: string,
-  list: StoryAmountStats[]
-): StoryAmountStats[] {
+  list: PartnerProgram_Analysis_ListStories[]
+): PartnerProgram_Analysis_ListStories[] {
   return list.sort((a, b) => {
     const x = a[key].toUpperCase();
     const y = b[key].toUpperCase();
@@ -117,8 +127,8 @@ function orderStringsASC(
 
 function orderStringsDESC(
   key: string,
-  list: StoryAmountStats[]
-): StoryAmountStats[] {
+  list: PartnerProgram_Analysis_ListStories[]
+): PartnerProgram_Analysis_ListStories[] {
   return list.sort((a, b) => {
     const x = a[key].toUpperCase();
     const y = b[key].toUpperCase();
@@ -128,8 +138,8 @@ function orderStringsDESC(
 
 function orderNumbersASC(
   key: string,
-  list: StoryAmountStats[]
-): StoryAmountStats[] {
+  list: PartnerProgram_Analysis_ListStories[]
+): PartnerProgram_Analysis_ListStories[] {
   return list.sort((a, b) => {
     const x = a[key];
     const y = b[key];
@@ -139,8 +149,8 @@ function orderNumbersASC(
 
 function orderNumbersDESC(
   key: string,
-  list: StoryAmountStats[]
-): StoryAmountStats[] {
+  list: PartnerProgram_Analysis_ListStories[]
+): PartnerProgram_Analysis_ListStories[] {
   return list.sort((a, b) => {
     const x = a[key];
     const y = b[key];
@@ -150,8 +160,8 @@ function orderNumbersDESC(
 
 function orderDatesASC(
   key: string,
-  list: StoryAmountStats[]
-): StoryAmountStats[] {
+  list: PartnerProgram_Analysis_ListStories[]
+): PartnerProgram_Analysis_ListStories[] {
   return list.sort((a, b) => {
     const x = a[key].timestamp;
     const y = b[key].timestamp;
@@ -161,8 +171,8 @@ function orderDatesASC(
 
 function orderDatesDESC(
   key: string,
-  list: StoryAmountStats[]
-): StoryAmountStats[] {
+  list: PartnerProgram_Analysis_ListStories[]
+): PartnerProgram_Analysis_ListStories[] {
   return list.sort((a, b) => {
     const x = a[key].timestamp;
     const y = b[key].timestamp;

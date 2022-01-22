@@ -1,34 +1,42 @@
 import { getDate } from "../../../Interfaces/CustomDateTime";
 import type {
-  MediumPartnerProgram,
-  MediumDashboard_Month,
-  MonthlyAmountsStats,
+  PartnerProgram,
+  PartnerProgram_Analysis_Month,
 } from "../../../Interfaces/MediumPartnerProgram";
 
-const getMonthStats = (
-  month: MediumDashboard_Month,
-  isCurrentMonth = false
-): MonthlyAmountsStats => {
-  return {
-    isCurrentMonth,
-    month: getDate(month.periodStartedAt),
-    amount: month.amount,
-  };
-};
-
 export const getMonthlyAmounts = (
-  stats: MediumPartnerProgram
-): MonthlyAmountsStats[] => {
-  const currentMonth = getMonthStats(stats.payload.currentMonthAmount, true);
-  const previousMonths = stats.payload.completedMonthlyAmounts.map((month) => {
-    return getMonthStats(month);
-  });
+  stats: PartnerProgram
+): PartnerProgram_Analysis_Month[] => {
+  const currentMonth = getCurrentMonthAmount(stats);
+  const previousMonths = getPreviousMonthsAmount(stats);
 
   return [currentMonth, ...previousMonths];
 };
 
+function getCurrentMonthAmount(
+  stats: PartnerProgram
+): PartnerProgram_Analysis_Month {
+  return {
+    isCurrentMonth: true,
+    month: getDate(stats.payload.currentMonthAmount.periodStartedAt),
+    amount: stats.payload.currentMonthAmount.amount,
+  };
+}
+
+function getPreviousMonthsAmount(
+  stats: PartnerProgram
+): PartnerProgram_Analysis_Month[] {
+  return stats.payload.completedMonthlyAmounts.map((month) => {
+    return {
+      isCurrentMonth: false,
+      month: getDate(month.periodStartedAt),
+      amount: month.amount,
+    };
+  });
+}
+
 export const getDataForMonthlyAmountsChart = (
-  monthly: MonthlyAmountsStats[]
+  monthly: PartnerProgram_Analysis_Month[]
 ): { data: number[]; labels: string[] } => {
   const data = monthly.map((m) => m.amount).reverse();
   const labels = monthly

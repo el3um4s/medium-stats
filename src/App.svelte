@@ -3,7 +3,7 @@
 
   import "./css/tailwind.pcss";
 
-  import type { MediumPartnerProgram } from "./Interfaces/MediumPartnerProgram";
+  import type { PartnerProgram } from "./Interfaces/MediumPartnerProgram";
   import { loadMediumJSONStats } from "./functions/utilityJSON";
 
   import ListStories from "./components/MediumPartnerProgram/ListStories/ListStories.svelte";
@@ -15,7 +15,7 @@
   const urlMediumPartnerProgram: string =
     "https://medium.com/me/partner/dashboard?format=json"; // dashboard.json
 
-  let mediumPartnerProgram: MediumPartnerProgram;
+  let mediumPartnerProgram: PartnerProgram;
   let component;
 </script>
 
@@ -71,7 +71,7 @@
 
 <footer>
   <p>
-    Version: 0.0.16 - I recommend using this app on pc. It is not designed for
+    Version: 0.0.17 - I recommend using this app on pc. It is not designed for
     smartphones.
   </p>
 </footer>
