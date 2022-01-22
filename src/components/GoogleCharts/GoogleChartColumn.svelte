@@ -12,6 +12,7 @@
     legend: "none",
     backgroundColor: "transparent",
     colors: colors.length > 0 ? colors : undefined,
+    titleTextStyle: { fontSize: 14, color: "#737373" },
   };
 </script>
 

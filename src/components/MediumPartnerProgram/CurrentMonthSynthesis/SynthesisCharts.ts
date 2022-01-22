@@ -1,6 +1,4 @@
 import type { PartnerProgram_Analysis_ListStories } from "../../../Interfaces/MediumPartnerProgram";
-import type { CustomDateTime } from "../../../Interfaces/CustomDateTime";
-import { getDate } from "../../../Interfaces/CustomDateTime";
 interface PieData {
   cols: ColsPie[];
   rows: [string, number][];
@@ -20,7 +18,7 @@ interface ColsCalendar {
   type: string;
 }
 
-export const earningForMonthPub = (
+export const earningPerMonthPub = (
   listStories: PartnerProgram_Analysis_ListStories[]
 ): PieData => {
   const listValue: { month: string; amount: number }[] = listStories.map(
@@ -53,7 +51,7 @@ export const earningForMonthPub = (
   };
 };
 
-export const earningForMonthStory = (
+export const earningPerMonthStory = (
   listStories: PartnerProgram_Analysis_ListStories[]
 ): PieData => {
   const listValue: { title: string; amount: number }[] = listStories.map(
@@ -88,20 +86,14 @@ export const earningForMonthStory = (
 export const writingDay = (
   listStories: PartnerProgram_Analysis_ListStories[]
 ): CalendarData => {
-  const now = getDate(Date.now());
-
-  const listValue: { date: Date; words: number }[] = listStories
-    .filter(
-      (story) =>
-        story.firstPublishedAt.month === now.month &&
-        story.firstPublishedAt.year === now.year
-    )
-    .map((story) => {
+  const listValue: { date: Date; words: number }[] = listStories.map(
+    (story) => {
       const { day, month, year } = story.firstPublishedAt;
       const date: Date = new Date(year, month, day);
       const words = story.wordCount;
       return { date, words };
-    });
+    }
+  );
 
   const groupedValue = groupBy(listValue, (s) => s.date);
 
@@ -111,7 +103,7 @@ export const writingDay = (
       (sum, current) => sum + current.words,
       0
     );
-    rows.push([new Date(property), words > 0 ? 1 : 0]);
+    rows.push([new Date(property), words]);
   }
 
   const cols = [

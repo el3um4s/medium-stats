@@ -8,34 +8,37 @@
   export let rows: [Date, number][] = [];
   export let title: String = "";
 
-  // let cols = [
-  //   { type: "date", id: "Date" },
-  //   { type: "number", id: "Won/Loss" },
-  // ];
+  export let colorAxis: [String, String] = ["#f0f9ff", "#0369a1"];
 
-  // let rows = [
-  //   [new Date(2012, 3, 13), 37032],
-  //   [new Date(2012, 3, 14), 38024],
-  //   [new Date(2012, 3, 15), 38024],
-  //   [new Date(2012, 3, 16), 38108],
-  //   [new Date(2012, 3, 17), 38229],
-  //   [new Date(2013, 9, 4), 38177],
-  //   [new Date(2013, 9, 5), 38705],
-  //   [new Date(2013, 9, 12), 38210],
-  //   [new Date(2013, 9, 13), 38029],
-  //   [new Date(2013, 9, 19), 38823],
-  //   [new Date(2013, 9, 23), 38345],
-  //   [new Date(2013, 9, 24), 38436],
-  //   [new Date(2013, 9, 30), 38447],
-  // ];
+  const listDates = rows
+    .map((r) => r[0])
+    .sort((a, b) => {
+      return a.getTime() - b.getTime();
+    });
+  const firstYear = listDates[0].getFullYear();
+  const lastYear = listDates[listDates.length - 1].getFullYear();
+  const years = lastYear - firstYear + 1;
 </script>
 
-<google-chart
-  type="calendar"
-  {cols}
-  {rows}
-  options={{
-    title: title,
-    backgroundColor: "transparent",
-  }}
-/>
+<section>
+  <google-chart
+    type="calendar"
+    {cols}
+    {rows}
+    options={{
+      title: title,
+      backgroundColor: "transparent",
+      colorAxis: { colors: colorAxis },
+    }}
+    style:height="{175 * years}px"
+  />
+</section>
+
+<style lang="postcss">
+  section {
+    height: fit-content;
+  }
+  google-chart {
+    width: 1000px;
+  }
+</style>

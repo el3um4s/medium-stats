@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { slide } from "svelte/transition";
   import Table from "../../Tables/Table.svelte";
   import type { PartnerProgram } from "../../../Interfaces/MediumPartnerProgram";
   import { getListStoryAmountStats } from "../../../functions/storyAmountStats";
@@ -30,6 +31,12 @@
   };
 </script>
 
-<Table {...props} />
+<section transition:slide>
+  <Table {...props} />
+</section>
 
-<style lang="postcss"></style>
+<style lang="postcss">
+  section {
+    height: 100%;
+  }
+</style>

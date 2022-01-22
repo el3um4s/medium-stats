@@ -16,5 +16,6 @@
   options={{
     title: title,
     backgroundColor: "transparent",
+    titleTextStyle: { fontSize: 14, color: "#737373" },
   }}
 />

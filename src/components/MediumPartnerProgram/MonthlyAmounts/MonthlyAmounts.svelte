@@ -1,24 +1,26 @@
 <script lang="ts">
   import { slide } from "svelte/transition";
-  import GoogleChartColumn from "../../GoogleCharts/GoogleChartColumn.svelte";
   import type { PartnerProgram } from "../../../Interfaces/MediumPartnerProgram";
 
-  import {
-    getMonthlyAmounts,
-    getDataForMonthlyAmountsChart,
-  } from "./monthlyAmounts";
+  import { getMonthlyAmounts } from "./MonthlyAmounts";
+  import { earningPerMonth } from "./MonthlyAmountsCharts";
+  import { getListStoryAmountStats } from "../../../functions/storyAmountStats";
+  import { writingDay } from "../CurrentMonthSynthesis/SynthesisCharts";
+
+  import GoogleChartColumn from "../../GoogleCharts/GoogleChartColumn.svelte";
+  import GoogleChartCalendar from "../../GoogleCharts/GoogleChartCalendar.svelte";
 
   export let mediumPartnerProgram: PartnerProgram;
 
   $: monthlyAmounts = getMonthlyAmounts(mediumPartnerProgram);
-  $: chartData = [...getDataForMonthlyAmountsChart(monthlyAmounts).data];
-  $: chartLabels = [...getDataForMonthlyAmountsChart(monthlyAmounts).labels];
+  $: monthlyEarning = earningPerMonth(monthlyAmounts);
 
-  $: data = chartLabels.map((label, index) => [label, chartData[index] / 100]);
+  $: listStories = getListStoryAmountStats(mediumPartnerProgram);
+  $: dayWithWords = writingDay(listStories);
 </script>
 
-<div class="monthly-amounts" transition:slide>
-  <div class="monthly-list">
+<section transition:slide>
+  <div class="list">
     <ul>
       {#each monthlyAmounts as data (data.month)}
         <li>
@@ -29,24 +31,49 @@
     </ul>
   </div>
 
-  <GoogleChartColumn
-    title="Monthly Earnings"
-    {data}
-    column={["Month", "$"]}
-    colors={["#ea580c"]}
-  />
-</div>
+  <div class="monthlyEarning">
+    <GoogleChartColumn
+      title="Monthly Earnings"
+      data={monthlyEarning}
+      column={["Month", "$"]}
+      colors={["#ea580c"]}
+    />
+  </div>
+
+  <div class="dayWithWords">
+    <GoogleChartCalendar
+      cols={dayWithWords.cols}
+      rows={dayWithWords.rows}
+      title="Words Per Day"
+      colorAxis={["#38bdf8", "#075985"]}
+    />
+  </div>
+</section>
 
 <style lang="postcss">
-  .monthly-amounts {
-    overflow: hidden;
+  section {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 280px 320px 320px 160px;
+    grid-template-rows: auto auto;
+    gap: 0px 0px;
+    grid-template-areas:
+      "list monthlyEarning monthlyEarning other"
+      "dayWithWords dayWithWords dayWithWords dayWithWords";
   }
 
-  .monthly-list {
-    width: 20ch;
-    height: 300px;
+  .list {
+    grid-area: list;
     overflow-y: auto;
+  }
+
+  .monthlyEarning {
+    grid-area: monthlyEarning;
+    width: 600px;
+  }
+
+  .dayWithWords {
+    grid-area: dayWithWords;
+    overflow-y: hidden;
+    overflow-x: auto;
   }
 </style>
