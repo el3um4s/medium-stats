@@ -7,6 +7,7 @@
   }[] = [];
   export let rows: [string, number][] = [];
   export let title: String = "";
+  export let sliceVisibilityThreshold: number = 0;
 </script>
 
 <google-chart
@@ -14,8 +15,9 @@
   {cols}
   {rows}
   options={{
-    title: title,
+    title,
     backgroundColor: "transparent",
     titleTextStyle: { fontSize: 14, color: "#737373" },
+    sliceVisibilityThreshold,
   }}
 />
