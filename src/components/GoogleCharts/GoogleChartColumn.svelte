@@ -2,8 +2,7 @@
   //   https://github.com/GoogleWebComponents/google-chart
   import "@google-web-components/google-chart";
 
-  export let column: String[] = [];
-  export let data: (string | number)[][] = [];
+  export let data: (String[] | (string | number)[])[] = [];
   export let title: String = "";
   export let colors: String[] = [];
 
@@ -16,4 +15,4 @@
   };
 </script>
 
-<google-chart data={[column, ...data]} options={{ ...options }} />
+<google-chart {data} options={{ ...options }} />

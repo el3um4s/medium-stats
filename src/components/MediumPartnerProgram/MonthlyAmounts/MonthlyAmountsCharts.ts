@@ -1,48 +1,28 @@
 import type {
-  PartnerProgram,
   PartnerProgram_Analysis_ListStories,
   PartnerProgram_Analysis_Month,
 } from "../../../Interfaces/MediumPartnerProgram";
-import { getDate } from "../../../Interfaces/CustomDateTime";
-
-interface ColumnsData {
-  cols: String[];
-  rows: [String, Number][];
-}
-
-interface CalendarData {
-  cols: ColsCalendar[];
-  rows: [Date, Number][];
-}
-interface ColsCalendar {
-  id: string;
-  type: string;
-}
-
-interface PieData {
-  cols: ColsPie[];
-  rows: [string, number][];
-}
-
-interface ColsPie {
-  label: string;
-  type: string;
-}
-
-interface TreemapData {
-  cols: [String, String, Number, Number][];
-  rows: [String, String | null, Number, Number][];
-}
 
 export const earningPerMonth = (
   monthly: PartnerProgram_Analysis_Month[]
-): (string | number)[][] => {
+): [string, string | number][] => {
   const data = monthly.map((m) => m.amount).reverse();
-  const labels = monthly
+  const labels: string[] = monthly
     .map((m) => `${m.month.monthName} ${m.month.year.toString().substring(2)}`)
     .reverse();
-  return labels.map((label, index) => [label, data[index] / 100]);
+
+  const column: [string, string] = ["Month", "$"];
+  const rows: [string, number][] = labels.map((label, index) => [
+    label,
+    data[index] / 100,
+  ]);
+  return [column, ...rows];
 };
+
+interface PieData {
+  cols: { label: string; type: string }[];
+  rows: [string, number][];
+}
 
 export const earningPerStory = (
   listStories: PartnerProgram_Analysis_ListStories[]

@@ -54,7 +54,6 @@
     <GoogleChartColumn
       title="Monthly Earnings"
       data={monthlyEarning}
-      column={["Month", "$"]}
       colors={["#ea580c"]}
     />
   </div>
