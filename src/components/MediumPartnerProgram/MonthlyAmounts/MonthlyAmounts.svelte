@@ -43,13 +43,6 @@
             <td class="value">{data.amount / 100} $</td>
           </tr>
         {/each}
-
-        {#each monthlyAmounts as data (data.month)}
-          <tr>
-            <td class="label">{data.month.monthName} {data.month.year}</td>
-            <td class="value">{data.amount / 100} $</td>
-          </tr>
-        {/each}
       </tbody>
     </table>
   </div>
@@ -68,7 +61,7 @@
       cols={storyEarning.cols}
       rows={storyEarning.rows}
       title="Earning Per Story"
-      sliceVisibilityThreshold={2 / 100}
+      sliceVisibilityThreshold={5 / 100}
     />
   </div>
 
@@ -96,28 +89,27 @@
 <style lang="postcss">
   section {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 8px 8px;
+    grid-template-columns: 400px 400px 400px;
+    grid-template-rows: 300px 300px auto;
+    gap: 4px 4px;
     grid-template-areas:
-      "list monthlyEarning storyEarning treemapWords"
-      "dayWithWords dayWithWords dayWithWords dayWithWords";
+      "monthlyEarning storyEarning list"
+      "treemapWords other list"
+      "dayWithWords dayWithWords dayWithWords";
   }
 
   .list {
     grid-area: list;
-    max-height: 300px;
+    max-height: 600px;
     overflow: hidden;
   }
 
   .monthlyEarning {
     grid-area: monthlyEarning;
-    /* width: 600px; */
   }
 
   .storyEarning {
     grid-area: storyEarning;
-    /* width: 600px; */
   }
   .dayWithWords {
     grid-area: dayWithWords;
@@ -132,7 +124,7 @@
 
   tbody {
     @apply block overflow-y-scroll overflow-x-hidden w-full;
-    max-height: 240px;
+    max-height: 540px;
   }
 
   tr {
