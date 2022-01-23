@@ -104,6 +104,41 @@ export const treemapWordsAndEarning = (
   ];
 };
 
+export const scatterWordsAndEarning = (
+  listStories: PartnerProgram_Analysis_ListStories[]
+): [
+  Number | String,
+  Number | String,
+  String | { type: String; role: String; p: { html: boolean } }
+][] => {
+  const cols: [
+    String,
+    String,
+    { type: String; role: String; p: { html: boolean } }
+  ] = [
+    "Words",
+    "Dollars",
+    { type: "string", role: "tooltip", p: { html: true } },
+  ];
+  const rows: [Number, Number, String][] = listStories.map((story) => [
+    story.wordCount,
+    story.amountTot / 100,
+    `
+    <div style="padding:4px;">
+    <div>${
+      story.title.length > 30 ? story.title.slice(0, 30) + "..." : story.title
+    }</div>
+    <div style="display:grid;grid-template-columns:8ch 8ch;gap:1px; margin:2px;">
+      <div>words</div><div><strong>${story.wordCount}</strong></div>
+      <div>dollars</div><div><strong>${(story.amountTot / 100).toFixed(
+        2
+      )}</strong></div>
+    </div>
+    </div>`,
+  ]);
+  return [cols, ...rows];
+};
+
 // stackoverflow.com/questions/40774697/how-can-i-group-an-array-of-objects-by-key
 // github.com/you-dont-need/You-Dont-Need-Lodash-Underscore
 function groupBy(xs, f) {

@@ -7,6 +7,7 @@
     earningPerMonth,
     earningPerStory,
     treemapWordsAndEarning,
+    scatterWordsAndEarning,
   } from "./MonthlyAmountsCharts";
   import { getListStoryAmountStats } from "../../../functions/storyAmountStats";
   import { writingDay } from "../CurrentMonthSynthesis/SynthesisCharts";
@@ -15,6 +16,7 @@
   import GoogleChartCalendar from "../../GoogleCharts/GoogleChartCalendar.svelte";
   import GoogleChartPie from "../../GoogleCharts/GoogleChartPie.svelte";
   import GoogleChartTreemap from "../../GoogleCharts/GoogleChartTreemap.svelte";
+  import GoogleChartScatter from "../../GoogleCharts/GoogleChartScatter.svelte";
 
   export let mediumPartnerProgram: PartnerProgram;
 
@@ -25,6 +27,7 @@
   $: dayWithWords = writingDay(listStories);
   $: storyEarning = earningPerStory(listStories);
   $: treemapWords = treemapWordsAndEarning(listStories);
+  $: scatterWords = scatterWordsAndEarning(listStories);
 </script>
 
 <section transition:slide>
@@ -61,7 +64,7 @@
       cols={storyEarning.cols}
       rows={storyEarning.rows}
       title="Earning Per Story"
-      sliceVisibilityThreshold={5 / 100}
+      sliceVisibilityThreshold={2.5 / 100}
     />
   </div>
 
@@ -84,6 +87,14 @@
       maxColor="#9a3412"
     />
   </div>
+
+  <div class="scatterWords">
+    <GoogleChartScatter
+      data={scatterWords}
+      title="Words vs Dollars comparison"
+      colors={["#ea580c"]}
+    />
+  </div>
 </section>
 
 <style lang="postcss">
@@ -93,9 +104,13 @@
     grid-template-rows: 300px 300px auto;
     gap: 4px 4px;
     grid-template-areas:
-      "monthlyEarning storyEarning list"
-      "treemapWords other list"
+      "list monthlyEarning storyEarning"
+      "list treemapWords scatterWords"
       "dayWithWords dayWithWords dayWithWords";
+
+    justify-content: start;
+    align-items: start;
+    justify-items: stretch;
   }
 
   .list {
@@ -110,6 +125,10 @@
 
   .storyEarning {
     grid-area: storyEarning;
+  }
+
+  .scatterWords {
+    grid-area: scatterWords;
   }
   .dayWithWords {
     grid-area: dayWithWords;
