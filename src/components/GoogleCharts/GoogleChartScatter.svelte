@@ -8,8 +8,8 @@
   ][] = [];
   export let title: String = "";
 
-  export let axisY: String = data[0][0].toString();
-  export let axisX: String = data[0][1].toString();
+  export let axisX: String = data[0][0].toString();
+  export let axisY: String = data[0][1].toString();
   export let colors: String[] = [];
 </script>
 
@@ -21,8 +21,8 @@
     backgroundColor: "transparent",
     titleTextStyle: { fontSize: 14, color: "#737373" },
     legend: "none",
-    hAxis: { title: axisY },
-    vAxis: { title: axisX },
+    hAxis: { title: axisX },
+    vAxis: { title: axisY },
     colors: colors.length > 0 ? colors : undefined,
     tooltip: { isHtml: true },
   }}
