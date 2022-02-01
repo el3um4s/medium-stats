@@ -26,7 +26,7 @@ export interface MonthSynthesis {
 
 export const synthesis = (
   mediumPartnerProgram: PartnerProgram
-): MonthSynthesis => {.
+): MonthSynthesis => {
   const listStories = getListStoryAmountStats(mediumPartnerProgram);
   const currentMonth = getCurrentMonth(mediumPartnerProgram);
   const { monthName, month, year } = currentMonth;
