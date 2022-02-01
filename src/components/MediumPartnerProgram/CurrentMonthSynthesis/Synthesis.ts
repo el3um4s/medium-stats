@@ -1,6 +1,10 @@
-import type { PartnerProgram_Analysis_ListStories } from "../../../Interfaces/MediumPartnerProgram";
+import type {
+  PartnerProgram,
+  PartnerProgram_Analysis_ListStories,
+} from "../../../Interfaces/MediumPartnerProgram";
 import type { CustomDateTime } from "../../../Interfaces/CustomDateTime";
 import { getDate } from "../../../Interfaces/CustomDateTime";
+import { getListStoryAmountStats } from "../../../functions/storyAmountStats";
 export interface MonthSynthesis {
   monthName: string;
   month: number;
@@ -21,9 +25,10 @@ export interface MonthSynthesis {
 }
 
 export const synthesis = (
-  listStories: PartnerProgram_Analysis_ListStories[]
-): MonthSynthesis => {
-  const currentMonth = getCurrentMonth();
+  mediumPartnerProgram: PartnerProgram
+): MonthSynthesis => {.
+  const listStories = getListStoryAmountStats(mediumPartnerProgram);
+  const currentMonth = getCurrentMonth(mediumPartnerProgram);
   const { monthName, month, year } = currentMonth;
   const currentMonthData = getMonthData({ listStories, month, year });
   const previousMonthsData = getPreviousMonthData({ listStories, month, year });
@@ -73,9 +78,26 @@ function div(a: number, b: number): number {
   return a * b === 0 ? 0 : a / b;
 }
 
-function getCurrentMonth(): CustomDateTime {
+function getCurrentMonthReal(): CustomDateTime {
   const date = Date.now();
   return getDate(date);
+}
+
+function getCurrentMonth(mediumPartnerProgram: PartnerProgram): CustomDateTime {
+  const periodStartedAt =
+    mediumPartnerProgram.payload.currentMonthAmount.periodStartedAt;
+  return getDate(periodStartedAt);
+}
+
+function getMonthLastStory(
+  list: PartnerProgram_Analysis_ListStories[]
+): CustomDateTime {
+  const sorted = list.sort((a, b) => {
+    const x = a.firstPublishedAt.timestamp;
+    const y = b.firstPublishedAt.timestamp;
+    return x > y ? -1 : x < y ? 1 : 0;
+  });
+  return sorted[0]?.firstPublishedAt;
 }
 
 function getMonthData(obj: {

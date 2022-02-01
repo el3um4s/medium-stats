@@ -43,7 +43,7 @@
         {#each monthlyAmounts as data (data.month)}
           <tr>
             <td class="label">{data.month.monthName} {data.month.year}</td>
-            <td class="value">{data.amount / 100} $</td>
+            <td class="value">{(data.amount / 100).toFixed(2)} $</td>
           </tr>
         {/each}
       </tbody>

@@ -11,6 +11,7 @@
     earningPerMonthStory,
     writingDay,
   } from "./SynthesisCharts";
+  import type { CustomDateTime } from "../../../Interfaces/CustomDateTime";
   import { getDate } from "../../../Interfaces/CustomDateTime";
 
   import Synthesis from "./Synthesis.svelte";
@@ -19,17 +20,45 @@
 
   export let mediumPartnerProgram: PartnerProgram;
 
+  $: currentMonth = getCurrentMonth(mediumPartnerProgram);
   $: listStories = getListStoryAmountStats(mediumPartnerProgram);
   $: earningForMonthPublished = earningPerMonthPub(listStories);
   $: earningForStoryPublished = earningPerMonthStory(listStories);
-  $: dayWithWords = writingDay(filterCurrenMonth(listStories));
+  $: dayWithWords = writingDay(filterCurrenMonth(listStories, currentMonth));
 
-  function filterCurrenMonth(list: PartnerProgram_Analysis_ListStories[]) {
-    const now = getDate(Date.now());
+  function getCurrentMonth(
+    mediumPartnerProgram: PartnerProgram
+  ): CustomDateTime {
+    const periodStartedAt =
+      mediumPartnerProgram.payload.currentMonthAmount.periodStartedAt;
+    return getDate(periodStartedAt);
+  }
+
+  function getMonthLastStory(list: PartnerProgram_Analysis_ListStories[]): {
+    month: number;
+    year: number;
+  } {
+    const sorted = list.sort((a, b) => {
+      const x = a.firstPublishedAt.timestamp;
+      const y = b.firstPublishedAt.timestamp;
+      return x > y ? -1 : x < y ? 1 : 0;
+    });
+    return {
+      month: sorted[0]?.firstPublishedAt.month,
+      year: sorted[0]?.firstPublishedAt.year,
+    };
+  }
+
+  function filterCurrenMonth(
+    list: PartnerProgram_Analysis_ListStories[],
+    month: CustomDateTime
+  ) {
+    // const now = getDate(Date.now());
+    // const now = getMonthLastStory(list);
     return list.filter(
       (story) =>
-        story.firstPublishedAt.month === now.month &&
-        story.firstPublishedAt.year === now.year
+        story.firstPublishedAt.month === month.month &&
+        story.firstPublishedAt.year === month.year
     );
   }
 </script>

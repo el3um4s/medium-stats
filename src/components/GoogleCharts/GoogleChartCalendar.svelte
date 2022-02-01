@@ -15,8 +15,9 @@
     .sort((a, b) => {
       return a.getTime() - b.getTime();
     });
-  const firstYear = listDates[0].getFullYear();
-  const lastYear = listDates[listDates.length - 1].getFullYear();
+
+  const firstYear = listDates[0]?.getFullYear();
+  const lastYear = listDates[listDates.length - 1]?.getFullYear();
   const years = lastYear - firstYear + 1;
 </script>
 
