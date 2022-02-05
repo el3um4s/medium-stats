@@ -1,5 +1,8 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
   import "@google-web-components/google-chart";
+
+  const dispatch = createEventDispatcher();
 
   export let cols: {
     id: string;
@@ -32,6 +35,15 @@
       colorAxis: { colors: colorAxis },
     }}
     style:height="{175 * years}px"
+    events={["onmouseover"]}
+    on:google-chart-onmouseover
+    on:google-chart-select={(e) => {
+      const selection = e.detail.chart.getSelection();
+      dispatch("select", {
+        selection,
+        data: selection[selection.length - 1].date,
+      });
+    }}
   />
 </section>
 

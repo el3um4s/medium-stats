@@ -28,6 +28,11 @@
   $: storyEarning = earningPerStory(listStories);
   $: treemapWords = treemapWordsAndEarning(listStories);
   $: scatterWords = scatterWordsAndEarning(listStories);
+
+  function selectedItemClickHandler(e) {
+    console.log("event works");
+    console.log(e.detail.data);
+  }
 </script>
 
 <section transition:slide>
@@ -73,6 +78,7 @@
       rows={dayWithWords.rows}
       title="Words Per Day"
       colorAxis={["#fdba74", "#9a3412"]}
+      on:select={selectedItemClickHandler}
     />
   </div>
 
