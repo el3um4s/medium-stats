@@ -1,10 +1,8 @@
 <script lang="ts">
-  import type { PartnerProgram } from "../../../Interfaces/MediumPartnerProgram";
+  import { partnerProgram } from "../../../stores/StorePartnerProgram";
   import { synthesis } from "./Synthesis";
 
-  export let mediumPartnerProgram: PartnerProgram;
-
-  $: monthSynthesis = synthesis(mediumPartnerProgram);
+  $: monthSynthesis = synthesis($partnerProgram);
 </script>
 
 <div class="synthesis">

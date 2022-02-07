@@ -1,6 +1,6 @@
 <script lang="ts">
   import { slide } from "svelte/transition";
-  import type { PartnerProgram } from "../../../Interfaces/MediumPartnerProgram";
+  import { partnerProgram } from "../../../stores/StorePartnerProgram";
 
   import { getMonthlyAmounts } from "./MonthlyAmounts";
   import {
@@ -18,12 +18,10 @@
   import GoogleChartTreemap from "../../GoogleCharts/GoogleChartTreemap.svelte";
   import GoogleChartScatter from "../../GoogleCharts/GoogleChartScatter.svelte";
 
-  export let mediumPartnerProgram: PartnerProgram;
-
-  $: monthlyAmounts = getMonthlyAmounts(mediumPartnerProgram);
+  $: monthlyAmounts = getMonthlyAmounts($partnerProgram);
   $: monthlyEarning = earningPerMonth(monthlyAmounts);
 
-  $: listStories = getListStoryAmountStats(mediumPartnerProgram);
+  $: listStories = getListStoryAmountStats($partnerProgram);
   $: dayWithWords = writingDay(listStories);
   $: storyEarning = earningPerStory(listStories);
   $: treemapWords = treemapWordsAndEarning(listStories);

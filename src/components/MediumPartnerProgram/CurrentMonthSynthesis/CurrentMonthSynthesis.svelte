@@ -1,5 +1,6 @@
 <script lang="ts">
   import { slide } from "svelte/transition";
+  import { partnerProgram } from "../../../stores/StorePartnerProgram";
   import type {
     PartnerProgram,
     PartnerProgram_Analysis_ListStories,
@@ -18,10 +19,8 @@
   import GoogleChartPie from "../../GoogleCharts/GoogleChartPie.svelte";
   import GoogleChartCalendar from "../../GoogleCharts/GoogleChartCalendar.svelte";
 
-  export let mediumPartnerProgram: PartnerProgram;
-
-  $: currentMonth = getCurrentMonth(mediumPartnerProgram);
-  $: listStories = getListStoryAmountStats(mediumPartnerProgram);
+  $: currentMonth = getCurrentMonth($partnerProgram);
+  $: listStories = getListStoryAmountStats($partnerProgram);
   $: earningForMonthPublished = earningPerMonthPub(listStories);
   $: earningForStoryPublished = earningPerMonthStory(listStories);
   $: dayWithWords = writingDay(filterCurrenMonth(listStories, currentMonth));
@@ -65,7 +64,7 @@
 
 <section class="syntPlusMonthPubs" transition:slide>
   <div class="synthesis">
-    <Synthesis {mediumPartnerProgram} />
+    <Synthesis />
   </div>
 
   <div class="earningForMonthPublished">

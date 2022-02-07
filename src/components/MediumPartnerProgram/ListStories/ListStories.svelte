@@ -1,7 +1,7 @@
 <script lang="ts">
   import { slide } from "svelte/transition";
   import Table from "../../Tables/Table.svelte";
-  import type { PartnerProgram } from "../../../Interfaces/MediumPartnerProgram";
+  import { partnerProgram } from "../../../stores/StorePartnerProgram";
   import { getListStoryAmountStats } from "../../../functions/storyAmountStats";
 
   import {
@@ -11,12 +11,10 @@
     chartsTable,
   } from "./listStories";
 
-  export let mediumPartnerProgram: PartnerProgram;
-
   let chartColumn = "title";
   let chartValue = "amountMonth";
 
-  $: listStories = getListStoryAmountStats(mediumPartnerProgram);
+  $: listStories = getListStoryAmountStats($partnerProgram);
 
   $: totalsTable = [...calculateTotalsTable(listStories, headersTable)];
 
