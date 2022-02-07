@@ -69,7 +69,7 @@
 
 <footer>
   <p>
-    Version: 0.0.27 - I recommend using this app on pc. It is not designed for
+    Version: 0.0.28 - I recommend using this app on pc. It is not designed for
     smartphones.
   </p>
 </footer>

@@ -1,23 +1,4 @@
-import type {
-  PartnerProgram_Analysis_ListStories,
-  PartnerProgram_Analysis_Month,
-} from "../../../Interfaces/MediumPartnerProgram";
-
-export const earningPerMonth = (
-  monthly: PartnerProgram_Analysis_Month[]
-): [string, string | number][] => {
-  const data = monthly.map((m) => m.amount).reverse();
-  const labels: string[] = monthly
-    .map((m) => `${m.month.monthName} ${m.month.year.toString().substring(2)}`)
-    .reverse();
-
-  const column: [string, string] = ["Month", "$"];
-  const rows: [string, number][] = labels.map((label, index) => [
-    label,
-    data[index] / 100,
-  ]);
-  return [column, ...rows];
-};
+import type { PartnerProgram_Analysis_ListStories } from "../../../Interfaces/MediumPartnerProgram";
 
 interface PieData {
   cols: { label: string; type: string }[];

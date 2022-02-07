@@ -2,9 +2,7 @@
   import { slide } from "svelte/transition";
   import { partnerProgram } from "../../../stores/StorePartnerProgram";
 
-  import { getMonthlyAmounts } from "./MonthlyAmounts";
   import {
-    earningPerMonth,
     earningPerStory,
     treemapWordsAndEarning,
     scatterWordsAndEarning,
@@ -18,8 +16,8 @@
   import GoogleChartTreemap from "../../GoogleCharts/GoogleChartTreemap.svelte";
   import GoogleChartScatter from "../../GoogleCharts/GoogleChartScatter.svelte";
 
-  $: monthlyAmounts = getMonthlyAmounts($partnerProgram);
-  $: monthlyEarning = earningPerMonth(monthlyAmounts);
+  $: monthlyAmounts = partnerProgram.getMonthlyAmounts();
+  $: monthlyEarning = partnerProgram.getEarningPerMonth();
 
   $: listStories = getListStoryAmountStats($partnerProgram);
   $: dayWithWords = writingDay(listStories);
