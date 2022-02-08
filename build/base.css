@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.0.18 | MIT License | https://tailwindcss.com
+! tailwindcss v3.0.19 | MIT License | https://tailwindcss.com
 *//*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
 2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
@@ -520,26 +520,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .table {
   display: table;
 }
-.grid {
-  display: grid;
-}
 .contents {
   display: contents;
 }
 .h-6 {
   height: 1.5rem;
-}
-.h-full {
-  height: 100%;
-}
-.h-5\/6 {
-  height: 83.333333%;
-}
-.h-8 {
-  height: 2rem;
-}
-.w-full {
-  width: 100%;
 }
 .table-auto {
   table-layout: auto;
@@ -553,30 +538,15 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border {
   border-width: 1px;
 }
-.border-t {
-  border-top-width: 1px;
-}
 .border-b {
   border-bottom-width: 1px;
 }
 .border-solid {
   border-style: solid;
 }
-.border-slate-600 {
-  --tw-border-opacity: 1;
-  border-color: rgb(71 85 105 / var(--tw-border-opacity));
-}
 .border-slate-400 {
   --tw-border-opacity: 1;
   border-color: rgb(148 163 184 / var(--tw-border-opacity));
-}
-.bg-orange-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(234 88 12 / var(--tw-bg-opacity));
-}
-.bg-red-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(220 38 38 / var(--tw-bg-opacity));
 }
 .p-1 {
   padding: 0.25rem;
@@ -595,9 +565,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .pb-1 {
   padding-bottom: 0.25rem;
-}
-.text-center {
-  text-align: center;
 }
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
@@ -624,9 +591,9 @@ svg.svelte-1at6spx {
 article.svelte-npq3pt{display:flex;flex-direction:column;overflow:hidden;height:100%}.header.svelte-npq3pt,.footer.svelte-npq3pt{display:grid}.header.svelte-npq3pt{border-bottom:2px solid var(--text-color, #1f2937);width:calc(100% - 1rem)}.footer.svelte-npq3pt{border-top:2px solid var(--text-color, #1f2937);border-bottom:1px solid var(--text-color, #1f2937);width:calc(100% - 1rem)}section.svelte-npq3pt{display:flex;flex-direction:column;overflow-y:auto}.row.svelte-npq3pt{display:grid;border-bottom:1px dotted var(--text-color, #6b7280)}.row.svelte-npq3pt:hover{background-color:#ffedd5}.svelte-npq3pt::-webkit-scrollbar{width:1rem}.svelte-npq3pt::-webkit-scrollbar-track{-webkit-box-shadow:inset 0 0 6px rgba(246, 107, 33, 0.5);border-radius:10px}.svelte-npq3pt::-webkit-scrollbar-thumb{border-radius:10px;-webkit-box-shadow:inset 0 0 6px rgba(234, 88, 12, 0.8)}.cell.svelte-npq3pt{padding-top:0.5rem;padding-bottom:0.5rem;padding-right:0.25rem;padding-left:0.25rem;;border:2px solid transparent;box-sizing:content-box}.column-order.svelte-npq3pt{border-left:2px dotted #fdba74;border-right:2px dotted #fdba74;background-color:#ffedd5}.data-charted.svelte-npq3pt{font-weight:700}.title.svelte-npq3pt{font-weight:700}
 section.svelte-qzr7y6{height:100%}
 section.svelte-l9jgz1{height:-webkit-fit-content;height:-moz-fit-content;height:fit-content}google-chart.svelte-l9jgz1{width:1000px}
-section.svelte-ezk0p5.svelte-ezk0p5{display:grid;grid-template-columns:400px 400px 400px;grid-template-rows:300px 300px auto;gap:4px 4px;grid-template-areas:"list monthlyEarning storyEarning"
+section.svelte-ylnpix.svelte-ylnpix{display:grid;grid-template-columns:400px 400px 400px;grid-template-rows:300px 300px auto;gap:4px 4px;grid-template-areas:"list monthlyEarning storyEarning"
       "list treemapWords scatterWords"
-      "dayWithWords dayWithWords dayWithWords";justify-content:start;align-items:start;justify-items:stretch}.list.svelte-ezk0p5.svelte-ezk0p5{grid-area:list;max-height:600px;overflow:hidden}.monthlyEarning.svelte-ezk0p5.svelte-ezk0p5{grid-area:monthlyEarning}.storyEarning.svelte-ezk0p5.svelte-ezk0p5{grid-area:storyEarning}.scatterWords.svelte-ezk0p5.svelte-ezk0p5{grid-area:scatterWords}.dayWithWords.svelte-ezk0p5.svelte-ezk0p5{grid-area:dayWithWords;overflow-y:hidden;overflow-x:auto}table.svelte-ezk0p5.svelte-ezk0p5{margin-top:0.5rem;margin-left:0.25rem;margin-right:0.25rem;margin-bottom:0.25rem;table-layout:auto;border-collapse:collapse;;width:calc(100% - 0.75rem)}tbody.svelte-ezk0p5.svelte-ezk0p5{display:block;width:100%;overflow-x:hidden;overflow-y:scroll;;max-height:540px}tr.svelte-ezk0p5.svelte-ezk0p5{border-bottom-width:1px;border-style:dotted;--tw-border-opacity:1;border-color:rgb(148 163 184 / var(--tw-border-opacity));padding:0.25rem}thead.svelte-ezk0p5 tr.svelte-ezk0p5{border-bottom-width:1px;border-style:solid;--tw-border-opacity:1;border-color:rgb(71 85 105 / var(--tw-border-opacity))}tbody.svelte-ezk0p5 tr.svelte-ezk0p5:hover{--tw-bg-opacity:1;background-color:rgb(254 215 170 / var(--tw-bg-opacity))}.label.svelte-ezk0p5.svelte-ezk0p5{text-align:left}.value.svelte-ezk0p5.svelte-ezk0p5{text-align:right}tr.svelte-ezk0p5.svelte-ezk0p5{display:grid;grid-template-columns:1fr 1fr}tbody.svelte-ezk0p5.svelte-ezk0p5::-webkit-scrollbar{width:8px}tbody.svelte-ezk0p5.svelte-ezk0p5::-webkit-scrollbar-track{-webkit-box-shadow:inset 0 0 6px rgba(246, 107, 33, 0.5);border-radius:10px}tbody.svelte-ezk0p5.svelte-ezk0p5::-webkit-scrollbar-thumb{border-radius:10px;-webkit-box-shadow:inset 0 0 6px rgba(234, 88, 12, 0.8)}
+      "dayWithWords dayWithWords dayWithWords";justify-content:start;align-items:start;justify-items:stretch}.list.svelte-ylnpix.svelte-ylnpix{grid-area:list;max-height:600px;overflow:hidden}.monthlyEarning.svelte-ylnpix.svelte-ylnpix{grid-area:monthlyEarning}.storyEarning.svelte-ylnpix.svelte-ylnpix{grid-area:storyEarning}.scatterWords.svelte-ylnpix.svelte-ylnpix{grid-area:scatterWords}.wordPerDay.svelte-ylnpix.svelte-ylnpix{grid-area:dayWithWords;overflow-y:hidden;overflow-x:auto}table.svelte-ylnpix.svelte-ylnpix{margin-top:0.5rem;margin-left:0.25rem;margin-right:0.25rem;margin-bottom:0.25rem;table-layout:auto;border-collapse:collapse;;width:calc(100% - 0.75rem)}tbody.svelte-ylnpix.svelte-ylnpix{display:block;width:100%;overflow-x:hidden;overflow-y:scroll;;max-height:540px}tr.svelte-ylnpix.svelte-ylnpix{border-bottom-width:1px;border-style:dotted;--tw-border-opacity:1;border-color:rgb(148 163 184 / var(--tw-border-opacity));padding:0.25rem}thead.svelte-ylnpix tr.svelte-ylnpix{border-bottom-width:1px;border-style:solid;--tw-border-opacity:1;border-color:rgb(71 85 105 / var(--tw-border-opacity))}tbody.svelte-ylnpix tr.svelte-ylnpix:hover{--tw-bg-opacity:1;background-color:rgb(254 215 170 / var(--tw-bg-opacity))}.label.svelte-ylnpix.svelte-ylnpix{text-align:left}.value.svelte-ylnpix.svelte-ylnpix{text-align:right}tr.svelte-ylnpix.svelte-ylnpix{display:grid;grid-template-columns:1fr 1fr}tbody.svelte-ylnpix.svelte-ylnpix::-webkit-scrollbar{width:8px}tbody.svelte-ylnpix.svelte-ylnpix::-webkit-scrollbar-track{-webkit-box-shadow:inset 0 0 6px rgba(246, 107, 33, 0.5);border-radius:10px}tbody.svelte-ylnpix.svelte-ylnpix::-webkit-scrollbar-thumb{border-radius:10px;-webkit-box-shadow:inset 0 0 6px rgba(234, 88, 12, 0.8)}
 .header.svelte-1h7lhdh{font-weight:700}.synthesis.svelte-1h7lhdh{display:flex;flex-direction:column;;border-bottom:1px solid var(--text-color, #6b7280)}.row.svelte-1h7lhdh{display:grid;;grid-template-columns:30ch auto}.row-main.svelte-1h7lhdh{border-top:1px solid var(--text-color, #6b7280);border-bottom:1px dashed var(--text-color, #6b7280);font-weight:700}div.row.svelte-1h7lhdh:hover{background-color:#ffedd5}.dotted.svelte-1h7lhdh{border-bottom:1px dashed var(--text-color, #6b7280)}.label.svelte-1h7lhdh, .value.svelte-1h7lhdh{padding-top:0.25rem;padding-bottom:0.25rem;padding-right:0.25rem;padding-left:0.25rem}.label.svelte-1h7lhdh,.value.svelte-1h7lhdh{;box-sizing:content-box}.value.svelte-1h7lhdh{text-align:end}
 section.svelte-wcmyjf{display:grid;grid-template-columns:400px 340px 340px;grid-template-rows:auto auto auto;gap:0px 0px;grid-template-areas:"synthesis earningForMonthPublished earningForStoryPublished"
       "synthesis other other"
