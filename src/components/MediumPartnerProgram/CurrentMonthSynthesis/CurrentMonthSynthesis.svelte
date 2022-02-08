@@ -1,9 +1,7 @@
 <script lang="ts">
   import { slide } from "svelte/transition";
   import { partnerProgram } from "../../../stores/PartnerProgram/StorePartnerProgram";
-  import type { PartnerProgram_Analysis_ListStories } from "../../../Interfaces/MediumPartnerProgram";
 
-  import { writingDay } from "./SynthesisCharts";
   import type { CustomDateTime } from "../../../Interfaces/CustomDateTime";
 
   import Synthesis from "./Synthesis.svelte";
@@ -11,22 +9,26 @@
   import GoogleChartCalendar from "../../GoogleCharts/GoogleChartCalendar.svelte";
 
   $: currentMonth = partnerProgram.getCurrentMonthDate();
-  $: listStories = partnerProgram.getListStories();
+
   $: earningForMonthPublished =
     partnerProgram.getChartsData.currentMonth.earningPerMonthPub();
   $: earningForStoryPublished =
     partnerProgram.getChartsData.currentMonth.earningPerMonthStory();
-  $: dayWithWords = writingDay(filterCurrenMonth(listStories, currentMonth));
 
-  function filterCurrenMonth(
-    list: PartnerProgram_Analysis_ListStories[],
-    month: CustomDateTime
-  ) {
-    return list.filter(
-      (story) =>
-        story.firstPublishedAt.month === month.month &&
-        story.firstPublishedAt.year === month.year
+  $: wordPerDay = filteredDate(
+    partnerProgram.getChartsData.monthly.wordPerDay(),
+    currentMonth
+  );
+
+  function filteredDate(calendar, month: CustomDateTime) {
+    const totalRows = calendar.rows;
+
+    const rows = totalRows.filter(
+      (r) =>
+        r[0].getMonth() === month.month && r[0].getFullYear() === month.year
     );
+    const cols = calendar.cols;
+    return { rows, cols };
   }
 </script>
 
@@ -51,8 +53,8 @@
   </div>
   <div class="dayWithWords">
     <GoogleChartCalendar
-      cols={dayWithWords.cols}
-      rows={dayWithWords.rows}
+      cols={wordPerDay.cols}
+      rows={wordPerDay.rows}
       title="Words Per Day"
       colorAxis={["#38bdf8", "#075985"]}
     />
