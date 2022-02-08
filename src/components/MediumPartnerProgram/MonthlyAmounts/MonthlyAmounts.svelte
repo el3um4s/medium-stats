@@ -2,13 +2,6 @@
   import { slide } from "svelte/transition";
   import { partnerProgram } from "../../../stores/PartnerProgram/StorePartnerProgram";
 
-  import {
-    earningPerStory,
-    treemapWordsAndEarning,
-    scatterWordsAndEarning,
-  } from "./MonthlyAmountsCharts";
-  import { writingDay } from "../CurrentMonthSynthesis/SynthesisCharts";
-
   import GoogleChartColumn from "../../GoogleCharts/GoogleChartColumn.svelte";
   import GoogleChartCalendar from "../../GoogleCharts/GoogleChartCalendar.svelte";
   import GoogleChartPie from "../../GoogleCharts/GoogleChartPie.svelte";
@@ -16,13 +9,14 @@
   import GoogleChartScatter from "../../GoogleCharts/GoogleChartScatter.svelte";
 
   $: monthlyAmounts = partnerProgram.getMonthlyAmounts();
-  $: monthlyEarning = partnerProgram.getEarningPerMonth();
 
-  $: listStories = partnerProgram.getListStories();
-  $: dayWithWords = writingDay(listStories);
-  $: storyEarning = earningPerStory(listStories);
-  $: treemapWords = treemapWordsAndEarning(listStories);
-  $: scatterWords = scatterWordsAndEarning(listStories);
+  $: monthlyEarning = partnerProgram.getChartsData.monthly.earningPerMonth();
+  $: storyEarning = partnerProgram.getChartsData.monthly.earningPerStory();
+  $: treemapWords =
+    partnerProgram.getChartsData.monthly.treemapWordsAndEarning();
+  $: scatterWords =
+    partnerProgram.getChartsData.monthly.scatterWordsAndEarning();
+  $: wordPerDay = partnerProgram.getChartsData.monthly.wordPerDay();
 
   function selectedItemClickHandler(e) {
     console.log("event works");
@@ -67,10 +61,10 @@
     />
   </div>
 
-  <div class="dayWithWords" transition:slide>
+  <div class="wordPerDay" transition:slide>
     <GoogleChartCalendar
-      cols={dayWithWords.cols}
-      rows={dayWithWords.rows}
+      cols={wordPerDay.cols}
+      rows={wordPerDay.rows}
       title="Words Per Day"
       colorAxis={["#fdba74", "#9a3412"]}
       on:select={selectedItemClickHandler}
@@ -130,7 +124,7 @@
   .scatterWords {
     grid-area: scatterWords;
   }
-  .dayWithWords {
+  .wordPerDay {
     grid-area: dayWithWords;
     overflow-y: hidden;
     overflow-x: auto;

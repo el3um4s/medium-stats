@@ -1,13 +1,41 @@
-import type { PartnerProgram_Analysis_ListStories } from "../../../Interfaces/MediumPartnerProgram";
+import type { PartnerProgram } from "../../Interfaces/MediumPartnerProgram";
+import { getListStories, getMonthlyAmounts } from "./HelperPartnerProgram";
 
 interface PieData {
   cols: { label: string; type: string }[];
   rows: [string, number][];
 }
 
+interface CalendarData {
+  cols: ColsCalendar[];
+  rows: [Date, number][];
+}
+interface ColsCalendar {
+  id: string;
+  type: string;
+}
+
+export const earningPerMonth = (
+  mediumPartnerProgram: PartnerProgram
+): [string, string | number][] => {
+  const monthly = getMonthlyAmounts(mediumPartnerProgram);
+  const data = monthly.map((m) => m.amount).reverse();
+  const labels: string[] = monthly
+    .map((m) => `${m.month.monthName} ${m.month.year.toString().substring(2)}`)
+    .reverse();
+
+  const column: [string, string] = ["Month", "$"];
+  const rows: [string, number][] = labels.map((label, index) => [
+    label,
+    data[index] / 100,
+  ]);
+  return [column, ...rows];
+};
+
 export const earningPerStory = (
-  listStories: PartnerProgram_Analysis_ListStories[]
+  mediumPartnerProgram: PartnerProgram
 ): PieData => {
+  const listStories = getListStories(mediumPartnerProgram);
   const listValue: { title: string; amount: number }[] = [...listStories]
     .sort((a, b) => b.amountTot - a.amountTot)
     .map((story) => {
@@ -38,8 +66,9 @@ export const earningPerStory = (
 };
 
 export const treemapWordsAndEarning = (
-  listStories: PartnerProgram_Analysis_ListStories[]
+  mediumPartnerProgram: PartnerProgram
 ): [String, String, Number | String, Number | String][] => {
+  const listStories = getListStories(mediumPartnerProgram);
   const rows: [String, String, Number, Number][] = listStories.map((story) => {
     const title = `${story.title} (${story.firstPublishedAt.year} ${story.firstPublishedAt.monthName} ${story.firstPublishedAt.day})`;
     const amount = story.amountTot;
@@ -66,12 +95,13 @@ export const treemapWordsAndEarning = (
 };
 
 export const scatterWordsAndEarning = (
-  listStories: PartnerProgram_Analysis_ListStories[]
+  mediumPartnerProgram: PartnerProgram
 ): [
   Number | String,
   Number | String,
   String | { type: String; role: String; p: { html: boolean } }
 ][] => {
+  const listStories = getListStories(mediumPartnerProgram);
   const cols: [
     String,
     String,
@@ -98,6 +128,40 @@ export const scatterWordsAndEarning = (
     </div>`,
   ]);
   return [cols, ...rows];
+};
+
+export const wordPerDay = (
+  mediumPartnerProgram: PartnerProgram
+): CalendarData => {
+  const listStories = getListStories(mediumPartnerProgram);
+  const listValue: { date: Date; words: number }[] = listStories.map(
+    (story) => {
+      const { day, month, year } = story.firstPublishedAt;
+      const date: Date = new Date(year, month, day);
+      const words = story.wordCount;
+      return { date, words };
+    }
+  );
+
+  const groupedValue = groupBy(listValue, (s) => s.date);
+
+  let rows = [];
+  for (const property in groupedValue) {
+    const words = groupedValue[property].reduce(
+      (sum, current) => sum + current.words,
+      0
+    );
+    rows.push([new Date(property), words]);
+  }
+
+  const cols = [
+    { type: "date", id: "Date" },
+    { type: "number", id: "$" },
+  ];
+  return {
+    cols,
+    rows,
+  };
 };
 
 // stackoverflow.com/questions/40774697/how-can-i-group-an-array-of-objects-by-key

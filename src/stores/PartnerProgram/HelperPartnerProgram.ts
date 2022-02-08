@@ -14,23 +14,6 @@ export const getMonthlyAmounts = (
   return [currentMonth, ...previousMonths];
 };
 
-export const getEarningPerMonth = (
-  stats: PartnerProgram
-): [string, string | number][] => {
-  const monthly: PartnerProgram_Analysis_Month[] = getMonthlyAmounts(stats);
-  const data = monthly.map((m) => m.amount).reverse();
-  const labels: string[] = monthly
-    .map((m) => `${m.month.monthName} ${m.month.year.toString().substring(2)}`)
-    .reverse();
-
-  const column: [string, string] = ["Month", "$"];
-  const rows: [string, number][] = labels.map((label, index) => [
-    label,
-    data[index] / 100,
-  ]);
-  return [column, ...rows];
-};
-
 export const getListStories = (
   mediumPartnerProgram: PartnerProgram
 ): PartnerProgram_Analysis_ListStories[] => {

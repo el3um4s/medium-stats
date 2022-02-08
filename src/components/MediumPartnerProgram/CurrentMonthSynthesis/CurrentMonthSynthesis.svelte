@@ -3,11 +3,7 @@
   import { partnerProgram } from "../../../stores/PartnerProgram/StorePartnerProgram";
   import type { PartnerProgram_Analysis_ListStories } from "../../../Interfaces/MediumPartnerProgram";
 
-  import {
-    earningPerMonthPub,
-    earningPerMonthStory,
-    writingDay,
-  } from "./SynthesisCharts";
+  import { writingDay } from "./SynthesisCharts";
   import type { CustomDateTime } from "../../../Interfaces/CustomDateTime";
 
   import Synthesis from "./Synthesis.svelte";
@@ -16,8 +12,10 @@
 
   $: currentMonth = partnerProgram.getCurrentMonthDate();
   $: listStories = partnerProgram.getListStories();
-  $: earningForMonthPublished = earningPerMonthPub(listStories);
-  $: earningForStoryPublished = earningPerMonthStory(listStories);
+  $: earningForMonthPublished =
+    partnerProgram.getChartsData.currentMonth.earningPerMonthPub();
+  $: earningForStoryPublished =
+    partnerProgram.getChartsData.currentMonth.earningPerMonthStory();
   $: dayWithWords = writingDay(filterCurrenMonth(listStories, currentMonth));
 
   function filterCurrenMonth(
