@@ -87,6 +87,8 @@
       data={scatterWords}
       title="Words vs Dollars comparison"
       colors={["#ea580c"]}
+      --range-handle="#ea580c"
+      --range-handle-focus="#ea580c"
     />
   </div>
 </section>
