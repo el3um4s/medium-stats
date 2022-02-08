@@ -1,8 +1,7 @@
 <script lang="ts">
   import { slide } from "svelte/transition";
   import Table from "../../Tables/Table.svelte";
-  import { partnerProgram } from "../../../stores/StorePartnerProgram";
-  import { getListStoryAmountStats } from "../../../functions/storyAmountStats";
+  import { partnerProgram } from "../../../stores/PartnerProgram/StorePartnerProgram";
 
   import {
     headersTable,
@@ -14,7 +13,7 @@
   let chartColumn = "title";
   let chartValue = "amountMonth";
 
-  $: listStories = getListStoryAmountStats($partnerProgram);
+  $: listStories = partnerProgram.getListStories();
 
   $: totalsTable = [...calculateTotalsTable(listStories, headersTable)];
 

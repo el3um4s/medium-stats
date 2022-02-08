@@ -1,11 +1,7 @@
 <script lang="ts">
   import { slide } from "svelte/transition";
-  import { partnerProgram } from "../../../stores/StorePartnerProgram";
-  import type {
-    PartnerProgram,
-    PartnerProgram_Analysis_ListStories,
-  } from "../../../Interfaces/MediumPartnerProgram";
-  import { getListStoryAmountStats } from "../../../functions/storyAmountStats";
+  import { partnerProgram } from "../../../stores/PartnerProgram/StorePartnerProgram";
+  import type { PartnerProgram_Analysis_ListStories } from "../../../Interfaces/MediumPartnerProgram";
 
   import {
     earningPerMonthPub,
@@ -13,47 +9,21 @@
     writingDay,
   } from "./SynthesisCharts";
   import type { CustomDateTime } from "../../../Interfaces/CustomDateTime";
-  import { getDate } from "../../../Interfaces/CustomDateTime";
 
   import Synthesis from "./Synthesis.svelte";
   import GoogleChartPie from "../../GoogleCharts/GoogleChartPie.svelte";
   import GoogleChartCalendar from "../../GoogleCharts/GoogleChartCalendar.svelte";
 
-  $: currentMonth = getCurrentMonth($partnerProgram);
-  $: listStories = getListStoryAmountStats($partnerProgram);
+  $: currentMonth = partnerProgram.getCurrentMonthDate();
+  $: listStories = partnerProgram.getListStories();
   $: earningForMonthPublished = earningPerMonthPub(listStories);
   $: earningForStoryPublished = earningPerMonthStory(listStories);
   $: dayWithWords = writingDay(filterCurrenMonth(listStories, currentMonth));
-
-  function getCurrentMonth(
-    mediumPartnerProgram: PartnerProgram
-  ): CustomDateTime {
-    const periodStartedAt =
-      mediumPartnerProgram.payload.currentMonthAmount.periodStartedAt;
-    return getDate(periodStartedAt);
-  }
-
-  function getMonthLastStory(list: PartnerProgram_Analysis_ListStories[]): {
-    month: number;
-    year: number;
-  } {
-    const sorted = list.sort((a, b) => {
-      const x = a.firstPublishedAt.timestamp;
-      const y = b.firstPublishedAt.timestamp;
-      return x > y ? -1 : x < y ? 1 : 0;
-    });
-    return {
-      month: sorted[0]?.firstPublishedAt.month,
-      year: sorted[0]?.firstPublishedAt.year,
-    };
-  }
 
   function filterCurrenMonth(
     list: PartnerProgram_Analysis_ListStories[],
     month: CustomDateTime
   ) {
-    // const now = getDate(Date.now());
-    // const now = getMonthLastStory(list);
     return list.filter(
       (story) =>
         story.firstPublishedAt.month === month.month &&

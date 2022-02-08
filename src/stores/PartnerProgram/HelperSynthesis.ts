@@ -1,34 +1,17 @@
 import type {
   PartnerProgram,
   PartnerProgram_Analysis_ListStories,
-} from "../Interfaces/MediumPartnerProgram";
-import type { CustomDateTime } from "../Interfaces/CustomDateTime";
-import { getDate } from "../Interfaces/CustomDateTime";
-import { getListStories } from "./HelperPartnerProgram";
-export interface MonthSynthesis {
-  monthName: string;
-  month: number;
-  year: number;
-  monthlyIncomeTotal: number;
-  monthlyIncomeNewArticle: number;
-  monthlyIncomeOldArticle: number;
-  numberArticleTotal: number;
-  numberArticleNewArticle: number;
-  numberArticleOldArticle: number;
-  monthsTopStory: number;
-  averageTotal: number;
-  averageNewArticle: number;
-  averageOldArticle: number;
-  percMonthlyIncomeBestArticle: number;
-  percPassiveIncome: number;
-  dailyAverageIncome: number;
-}
+  MonthSynthesis,
+} from "../../Interfaces/MediumPartnerProgram";
 
-export const synthesis = (
+import { getCurrentMonthDate } from "./Utility";
+import { getListStories } from "./HelperPartnerProgram";
+
+export const getCurrentMonthSynthesis = (
   mediumPartnerProgram: PartnerProgram
 ): MonthSynthesis => {
   const listStories = getListStories(mediumPartnerProgram);
-  const currentMonth = getCurrentMonth(mediumPartnerProgram);
+  const currentMonth = getCurrentMonthDate(mediumPartnerProgram);
   const { monthName, month, year } = currentMonth;
   const currentMonthData = getMonthData({ listStories, month, year });
   const previousMonthsData = getPreviousMonthData({ listStories, month, year });
@@ -76,12 +59,6 @@ export const synthesis = (
 
 function div(a: number, b: number): number {
   return a * b === 0 ? 0 : a / b;
-}
-
-function getCurrentMonth(mediumPartnerProgram: PartnerProgram): CustomDateTime {
-  const periodStartedAt =
-    mediumPartnerProgram.payload.currentMonthAmount.periodStartedAt;
-  return getDate(periodStartedAt);
 }
 
 function getMonthData(obj: {

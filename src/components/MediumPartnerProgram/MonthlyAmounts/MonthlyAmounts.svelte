@@ -1,13 +1,12 @@
 <script lang="ts">
   import { slide } from "svelte/transition";
-  import { partnerProgram } from "../../../stores/StorePartnerProgram";
+  import { partnerProgram } from "../../../stores/PartnerProgram/StorePartnerProgram";
 
   import {
     earningPerStory,
     treemapWordsAndEarning,
     scatterWordsAndEarning,
   } from "./MonthlyAmountsCharts";
-  import { getListStoryAmountStats } from "../../../functions/storyAmountStats";
   import { writingDay } from "../CurrentMonthSynthesis/SynthesisCharts";
 
   import GoogleChartColumn from "../../GoogleCharts/GoogleChartColumn.svelte";
@@ -19,7 +18,7 @@
   $: monthlyAmounts = partnerProgram.getMonthlyAmounts();
   $: monthlyEarning = partnerProgram.getEarningPerMonth();
 
-  $: listStories = getListStoryAmountStats($partnerProgram);
+  $: listStories = partnerProgram.getListStories();
   $: dayWithWords = writingDay(listStories);
   $: storyEarning = earningPerStory(listStories);
   $: treemapWords = treemapWordsAndEarning(listStories);

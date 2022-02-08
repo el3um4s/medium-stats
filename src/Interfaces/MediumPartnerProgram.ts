@@ -46,3 +46,22 @@ export interface PartnerProgram_Analysis_ListStories {
   readingTime: number;
   firstPublishedAt: CustomDateTime;
 }
+
+export interface MonthSynthesis {
+  monthName: string;
+  month: number;
+  year: number;
+  monthlyIncomeTotal: number;
+  monthlyIncomeNewArticle: number;
+  monthlyIncomeOldArticle: number;
+  numberArticleTotal: number;
+  numberArticleNewArticle: number;
+  numberArticleOldArticle: number;
+  monthsTopStory: number;
+  averageTotal: number;
+  averageNewArticle: number;
+  averageOldArticle: number;
+  percMonthlyIncomeBestArticle: number;
+  percPassiveIncome: number;
+  dailyAverageIncome: number;
+}

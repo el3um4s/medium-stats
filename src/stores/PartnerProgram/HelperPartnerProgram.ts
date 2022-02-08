@@ -1,9 +1,9 @@
-import { getDate } from "../Interfaces/CustomDateTime";
+import { getDate } from "../../Interfaces/CustomDateTime";
 import type {
   PartnerProgram,
   PartnerProgram_Analysis_Month,
   PartnerProgram_Analysis_ListStories,
-} from "../Interfaces/MediumPartnerProgram";
+} from "../../Interfaces/MediumPartnerProgram";
 
 export const getMonthlyAmounts = (
   stats: PartnerProgram

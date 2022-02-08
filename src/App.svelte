@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { partnerProgram } from "./stores/StorePartnerProgram";
+  import { partnerProgram } from "./stores/PartnerProgram/StorePartnerProgram";
 
   import "./css/tailwind.pcss";
 
@@ -69,7 +69,7 @@
 
 <footer>
   <p>
-    Version: 0.0.28 - I recommend using this app on pc. It is not designed for
+    Version: 0.0.29 - I recommend using this app on pc. It is not designed for
     smartphones.
   </p>
 </footer>

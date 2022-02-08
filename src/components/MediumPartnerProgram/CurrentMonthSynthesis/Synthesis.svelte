@@ -1,8 +1,6 @@
 <script lang="ts">
-  import { partnerProgram } from "../../../stores/StorePartnerProgram";
-  import { synthesis } from "./Synthesis";
-
-  $: monthSynthesis = synthesis($partnerProgram);
+  import { partnerProgram } from "../../../stores/PartnerProgram/StorePartnerProgram";
+  $: monthSynthesis = partnerProgram.getCurrentMonthSynthesis();
 </script>
 
 <div class="synthesis">
