@@ -34,7 +34,7 @@ export const partnerProgram = {
       earningPerMonthPub: () =>
         ChartsCurrentMonth.earningPerMonthPub(get(partnerProgramStore)),
       earningPerMonthStory: () =>
-        ChartsCurrentMonth.earningPerMonthPub(get(partnerProgramStore)),
+        ChartsCurrentMonth.earningPerMonthStory(get(partnerProgramStore)),
     },
   },
 };

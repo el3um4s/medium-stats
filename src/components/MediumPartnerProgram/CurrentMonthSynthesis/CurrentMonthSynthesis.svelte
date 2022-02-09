@@ -49,6 +49,10 @@
       cols={earningForStoryPublished.cols}
       rows={earningForStoryPublished.rows}
       title="Earning Per Story"
+      on:select={(e) => {
+        console.log(e.detail.row);
+        console.log(e.detail.value);
+      }}
     />
   </div>
   <div class="dayWithWords">
@@ -59,6 +63,7 @@
       colorAxis={["#38bdf8", "#075985"]}
     />
   </div>
+  <div class="storySelected" />
 </section>
 
 <style lang="postcss">
@@ -69,7 +74,7 @@
     gap: 0px 0px;
     grid-template-areas:
       "synthesis earningForMonthPublished earningForStoryPublished"
-      "synthesis other other"
+      "synthesis other storySelected"
       "dayWithWords dayWithWords dayWithWords";
   }
 
@@ -82,6 +87,11 @@
   .earningForStoryPublished {
     grid-area: earningForStoryPublished;
   }
+
+  .storySelected {
+    grid-area: storySelected;
+  }
+
   .dayWithWords {
     grid-area: dayWithWords;
     width: 100%;

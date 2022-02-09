@@ -1,5 +1,8 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
   import "@google-web-components/google-chart";
+
+  const dispatch = createEventDispatcher();
 
   export let cols: {
     label: string;
@@ -19,5 +22,13 @@
     backgroundColor: "transparent",
     titleTextStyle: { fontSize: 14, color: "#737373" },
     sliceVisibilityThreshold,
+  }}
+  on:google-chart-select={(e) => {
+    const selection = e.detail.chart.getSelection();
+    dispatch("select", {
+      selection,
+      row: selection[0].row,
+      value: rows[selection[0].row],
+    });
   }}
 />
