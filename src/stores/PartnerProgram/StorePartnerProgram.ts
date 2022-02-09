@@ -6,6 +6,7 @@ import * as H from "./HelperPartnerProgram";
 import * as U from "./Utility";
 import * as ChartsMonthly from "./HelperMonthlyAmountsCharts";
 import * as ChartsCurrentMonth from "./HelperCurrentMonthCharts";
+import * as Stories from "./HelperSingleStoryData";
 import { getCurrentMonthSynthesis } from "./HelperSynthesis";
 
 const partnerProgramStore: Writable<PartnerProgram> = writable();
@@ -16,6 +17,8 @@ export const partnerProgram = {
   getCurrentMonthDate: () => U.getCurrentMonthDate(get(partnerProgramStore)),
   getMonthlyAmounts: () => H.getMonthlyAmounts(get(partnerProgramStore)),
   getListStories: () => H.getListStories(get(partnerProgramStore)),
+  getStoryById: (id: string) =>
+    Stories.getStoryById(get(partnerProgramStore), id),
   getCurrentMonthSynthesis: () =>
     getCurrentMonthSynthesis(get(partnerProgramStore)),
   getChartsData: {

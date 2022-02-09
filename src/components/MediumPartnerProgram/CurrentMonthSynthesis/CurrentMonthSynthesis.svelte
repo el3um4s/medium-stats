@@ -8,6 +8,8 @@
   import GoogleChartPie from "../../GoogleCharts/GoogleChartPie.svelte";
   import GoogleChartCalendar from "../../GoogleCharts/GoogleChartCalendar.svelte";
 
+  import CardStory from "../CardStory/CardStory.svelte";
+
   $: currentMonth = partnerProgram.getCurrentMonthDate();
 
   $: earningForMonthPublished =
@@ -30,6 +32,8 @@
     const cols = calendar.cols;
     return { rows, cols };
   }
+
+  let storySelected;
 </script>
 
 <section class="syntPlusMonthPubs" transition:slide>
@@ -50,10 +54,16 @@
       rows={earningForStoryPublished.rows}
       title="Earning Per Story"
       on:select={(e) => {
-        console.log(e.detail.row);
-        console.log(e.detail.value);
+        const id = e.detail.value ? e.detail.value[2] : undefined;
+        storySelected = id ? partnerProgram.getStoryById(id) : undefined;
+        console.log(storySelected);
       }}
     />
+  </div>
+  <div class="storySelected">
+    {#if storySelected}
+      <CardStory story={storySelected} />
+    {/if}
   </div>
   <div class="dayWithWords">
     <GoogleChartCalendar
@@ -63,7 +73,6 @@
       colorAxis={["#38bdf8", "#075985"]}
     />
   </div>
-  <div class="storySelected" />
 </section>
 
 <style lang="postcss">
@@ -74,7 +83,7 @@
     gap: 0px 0px;
     grid-template-areas:
       "synthesis earningForMonthPublished earningForStoryPublished"
-      "synthesis other storySelected"
+      "synthesis storySelected storySelected"
       "dayWithWords dayWithWords dayWithWords";
   }
 
@@ -90,6 +99,8 @@
 
   .storySelected {
     grid-area: storySelected;
+    height: 200px;
+    padding: 8px;
   }
 
   .dayWithWords {

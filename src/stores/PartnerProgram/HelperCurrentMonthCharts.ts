@@ -44,33 +44,21 @@ export const earningPerMonthPub = (
   };
 };
 
-export const earningPerMonthStory = (
-  mediumPartnerProgram: PartnerProgram
-): PieData => {
+export const earningPerMonthStory = (mediumPartnerProgram: PartnerProgram) => {
   const listStories = getListStories(mediumPartnerProgram);
-  const listValue: { title: string; amount: number }[] = listStories.map(
-    (story) => {
-      const title = story.title;
-      const amount = story.amountMonth;
-      return { title, amount };
-    }
-  );
-
-  const groupedValue = groupBy(listValue, (s) => s.title);
-
-  let rows = [];
-  for (const property in groupedValue) {
-    const amount = groupedValue[property].reduce(
-      (sum, current) => sum + current.amount,
-      0
-    );
-    rows.push([property, amount / 100]);
-  }
+  const rows = listStories.map((story) => {
+    const title = story.title;
+    const id = story.id;
+    const amount = story.amountMonth / 100;
+    return [title, amount, id];
+  });
 
   const cols = [
     { label: "Title", type: "string" },
     { label: "$", type: "number" },
+    { label: "ID", type: "string" },
   ];
+
   return {
     cols,
     rows,
