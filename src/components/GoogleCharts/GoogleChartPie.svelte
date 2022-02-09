@@ -27,7 +27,6 @@
     const selection = e.detail.chart.getSelection();
     dispatch("select", {
       selection,
-      event: selection.length > 0 ? "select" : "unselect",
       row: selection[0]?.row,
       value: rows[selection[0]?.row],
     });

@@ -56,7 +56,6 @@
       on:select={(e) => {
         const id = e.detail.value ? e.detail.value[2] : undefined;
         storySelected = id ? partnerProgram.getStoryById(id) : undefined;
-        console.log(storySelected);
       }}
     />
   </div>

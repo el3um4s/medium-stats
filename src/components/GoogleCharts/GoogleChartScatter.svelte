@@ -1,13 +1,12 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
   // https://github.com/simeydotme/svelte-range-slider-pips
   import RangeSlider from "svelte-range-slider-pips";
   import "@google-web-components/google-chart";
 
-  export let data: [
-    Number | String,
-    Number | String,
-    String | { type: String; role: String }
-  ][] = [];
+  const dispatch = createEventDispatcher();
+
+  export let data = [];
   export let title: String = "";
 
   export let axisX: String = data[0][0].toString();
@@ -75,6 +74,15 @@
       vAxis,
       colors: colors.length > 0 ? colors : undefined,
       tooltip: { isHtml: true },
+    }}
+    on:google-chart-select={(e) => {
+      const selection = e.detail.chart.getSelection();
+      dispatch("select", {
+        selection,
+        row: selection[0]?.row,
+        column: selection[0]?.column,
+        value: data[selection[0]?.row + 1],
+      });
     }}
   />
   <div class="horizontal">

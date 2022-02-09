@@ -32,33 +32,23 @@ export const earningPerMonth = (
   return [column, ...rows];
 };
 
-export const earningPerStory = (
-  mediumPartnerProgram: PartnerProgram
-): PieData => {
+export const earningPerStory = (mediumPartnerProgram: PartnerProgram) => {
   const listStories = getListStories(mediumPartnerProgram);
-  const listValue: { title: string; amount: number }[] = [...listStories]
+  const rows = listStories
     .sort((a, b) => b.amountTot - a.amountTot)
     .map((story) => {
       const title = story.title;
-      const amount = story.amountTot;
-      return { title, amount };
+      const id = story.id;
+      const amount = story.amountTot / 100;
+      return [title, amount, id];
     });
-
-  const groupedValue = groupBy(listValue, (s) => s.title);
-
-  let rows = [];
-  for (const property in groupedValue) {
-    const amount = groupedValue[property].reduce(
-      (sum, current) => sum + current.amount,
-      0
-    );
-    rows.push([property, amount / 100]);
-  }
 
   const cols = [
     { label: "Title", type: "string" },
     { label: "$", type: "number" },
+    { label: "ID", type: "string" },
   ];
+
   return {
     cols,
     rows,
@@ -96,25 +86,17 @@ export const treemapWordsAndEarning = (
 
 export const scatterWordsAndEarning = (
   mediumPartnerProgram: PartnerProgram
-): [
-  Number | String,
-  Number | String,
-  String | { type: String; role: String; p: { html: boolean } }
-][] => {
+) => {
   const listStories = getListStories(mediumPartnerProgram);
-  const cols: [
-    String,
-    String,
-    { type: String; role: String; p: { html: boolean } }
-  ] = [
+  const cols = [
     "Words",
     "Dollars",
     { type: "string", role: "tooltip", p: { html: true } },
   ];
-  const rows: [Number, Number, String][] = listStories.map((story) => [
+  const rows = listStories.map((story) => [
     story.wordCount,
     story.amountTot / 100,
-    `
+    `<!-- id: ${story.id} -->
     <div style="padding:4px;">
     <div>${
       story.title.length > 30 ? story.title.slice(0, 30) + "..." : story.title
