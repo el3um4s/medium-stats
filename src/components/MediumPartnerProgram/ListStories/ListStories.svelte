@@ -9,7 +9,6 @@
     ordersTable,
     chartsTable,
   } from "./listStories";
-  import App from "../../../App.svelte";
 
   let chartColumn = "title";
   let chartValue = "amountMonth";
